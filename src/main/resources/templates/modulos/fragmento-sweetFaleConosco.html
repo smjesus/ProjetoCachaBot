@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org" >
+    <head><title>Fragment Thymeleaf</title></head>
+    <body>
+        <div th:fragment="popup-sweetAlert">
+        <!--  EVENT HANDLER PARA CAPTURAR O CLIQUE NO MENU FALE CONOSCO -->
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            document.addEventListener('DOMContentLoaded', function() {
+                const btn = document.getElementById('btnContato');
+                if (btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        abrirFormularioContato(); // precisa estar definida (pode ser window.abrirFormularioContato)
+                    });
+                }
+            });
+            /*]]>*/
+        </script>
+        
+        <!--  SweetAlert PopUp com o formulario FALE CONOSCO -->
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+
+            const i18nContato = {
+                titulo: /*[[#{contato.titulo}]]*/ 'Fale Conosco',
+                nomeLabel: /*[[#{contato.nome.label}]]*/ 'Nome:',
+                nomePlaceholder: /*[[#{contato.nome.placeholder}]]*/ 'Seu nome completo',
+                telLabel: /*[[#{contato.telefone.label}]]*/ 'Telefone:',
+                telPlaceholder: /*[[#{contato.telefone.placeholder}]]*/ '(99) 99999-9999',
+                emailLabel: /*[[#{contato.email.label}]]*/ 'Email:',
+                emailPlaceholder: /*[[#{contato.email.placeholder}]]*/ 'voce@exemplo.com',
+                msgLabel: /*[[#{contato.mensagem.label}]]*/ 'Mensagem:',
+                msgPlaceholder: /*[[#{contato.mensagem.placeholder}]]*/ 'Digite sua mensagem...',
+                enviar: /*[[#{contato.enviar}]]*/ 'Enviar',
+                cancelar: /*[[#{contato.cancelar}]]*/ 'Cancelar',
+                erroCampos: /*[[#{contato.erro.camposObrigatorios}]]*/ 'Preencha todos os campos obrigatórios',
+                urlEnviarContato: /*[[@{/faleconosco}]]*/ "/error" 
+            };
+
+            /**
+             * Abre o formulário de contato (internacionalizado)
+             */
+            function abrirFormularioContato() {
+                Swal.fire({
+                    title: /*[[#{contato.titulo}]]*/ 'Fale Conosco',
+                    html: `
+                        <style>
+                               .form-grid {
+                                   gap: 12px 18px;
+                                   margin: 10px;
+                                   padding-right: 5%;
+                                   text-align: left;
+                               }
+
+                               .form-grid label {
+                                   font-weight: 600;
+                                   padding-top: 8px;
+                               }
+
+                               .form-grid input,
+                               .form-grid textarea {
+                                   width: 100%;
+                                   padding: 8px 10px;
+                                   border-radius: 6px;
+                                   border: 1px solid #bbb;
+                                   font-size: 0.95rem;
+                                   box-sizing: border-box;
+                               }
+
+                               .form-grid textarea {
+                                   resize: vertical;
+                               }
+                           </style>
+
+                            <form id="formContato" action="${i18nContato.urlEnviarContato}" method="post">
+                                <input type="hidden" name="_csrf" id="csrfContato" />
+                                
+                                <div class="form-grid">
+                                
+                                    <div class="form-group" style="text-align:left;">
+                                        <label>${i18nContato.nomeLabel}</label>
+                                        <input type="text" id="nome" name="nome" class="swal2-input"
+                                            placeholder="${i18nContato.nomePlaceholder}" required>
+                                    </div>
+
+                                    <div class="form-group" style="text-align:left;">
+                                        <label>${i18nContato.telLabel}</label>
+                                        <input type="text" id="telefone" name="telefone" class="swal2-input"
+                                            placeholder="${i18nContato.telPlaceholder}">
+                                    </div>
+
+                                    <div class="form-group" style="text-align:left;">
+                                        <label>${i18nContato.emailLabel}</label>
+                                        <input type="email" id="email" name="email" class="swal2-input"
+                                            placeholder="${i18nContato.emailPlaceholder}" required>
+                                    </div>
+
+                                    <div class="form-group" style="text-align:left;">
+                                        <label>${i18nContato.msgLabel}</label>
+                                        <textarea id="mensagem" name="mensagem" class="swal2-textarea"
+                                            placeholder="${i18nContato.msgPlaceholder}" required></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                          `,
+                    showCancelButton: true,
+                    confirmButtonText: /*[[#{contato.enviar}]]*/ 'Enviar',
+                    cancelButtonText: /*[[#{contato.cancelar}]]*/ 'Cancelar',
+                    focusConfirm: false,
+                    didOpen: () => {
+                        // injeta token CSRF corretamente
+                        const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+                        document.getElementById('csrfContato').value = token;
+                    },
+
+                    preConfirm: () => {
+                        const form = document.getElementById('formContato');
+
+                        if (!form.nome.value.trim() || !form.email.value.trim() || !form.mensagem.value.trim()) {
+                            Swal.showValidationMessage(
+                                /*[[#{contato.erro.camposObrigatorios}]]*/ 'Preencha todos os campos obrigatórios'
+                            );
+                            return false;
+                        }
+
+                        form.submit();
+                    }
+
+                });
+
+            }
+    
+            /*]]>*/
+        </script>
+        
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+            document.addEventListener('DOMContentLoaded', function() {
+
+                /*[# th:if="${sucessoContato != null}" ]*/
+                Swal.fire({
+                    icon: 'success',
+                    title: /*[[#{contato.titulo}]]*/ 'Sucesso!',
+                    text: /*[[#{${sucessoContato}}]]*/ 'Mensagem enviada com sucesso!',
+                    confirmButtonText: /*[[#{global.link.fechar}]]*/ 'OK'
+                });
+                /*[/]*/
+
+                /*[# th:if="${erroContato != null}" ]*/
+                Swal.fire({
+                    icon: 'error',
+                    title: /*[[#{contato.tituloErro}]]*/ 'Erro!',
+                    text: /*[[#{${erroContato}}]]*/ 'Ocorreu um erro ao enviar a mensagem.',
+                    confirmButtonText: /*[[#{global.link.fechar}]]*/ 'OK'
+                });
+                /*[/]*/
+
+            });
+        /*]]>*/
+        </script>
+        </div>
+    </body>
+</html>

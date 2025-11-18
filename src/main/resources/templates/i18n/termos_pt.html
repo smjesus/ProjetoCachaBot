@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>CachaBOT</title>
+</head>
+    
+<body id="page-top">
+
+    <div th:insert="~{modulos/fragmento-menu-web :: navbar-menuprincipal}"></div>
+    
+    <!-- Header-->
+    <header class="masthead d-flex align-items-center">
+        <div class="container px-4 px-lg-5 text-center">
+            <h1 class="mb-1">CachaBOT</h1>
+            <h3 class="mb-5"><em><span th:text="#{home.text.terms}"/></em></h3>
+        </div>
+    </header>
+
+    <!-- Terms  -->
+    <section class="content-section bg-light" id="about">
+        <div class="container px-4 px-lg-5 text-center">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-10">
+                    <h2>Termos e condi&ccedil;&otilde;es de uso do CachaBOT</h2>
+                    <p class="lead mb-5">&nbsp;</p>
+                    <div style="text-align: left; font-weight: normal; ">
+                        <p><span lang="pt-BR">Estes "Termos de Uso" ("Termos") definem o seu acesso e o uso do site do CachaBOT (</span><span lang="pt-BR"><em><strong>http://cachabot.aeroceti.com.br</strong></em></span><span lang="pt-BR">) bem como os servi&ccedil;os realizados pelo aplicativo CachaBot (plugin para o Discord). Leia estes Termos cuidadosamente e, em caso de d&uacute;vidas, entre em contato conosco.</span></p>
+                        <p><span lang="pt-BR">Ao acessar o site do CachaBOT ou instalar o CachaBOT em seu &ldquo;servidor&rdquo; no Discord, voc&ecirc; concorda e aceita estes Termos e nossa Pol&iacute;tica de Privacidade.</span></p>
+                        <p><span lang="pt-BR"><strong>1. Usando o CachaBot</strong></span></p>
+                        <p><span lang="pt-BR">a. </span><span lang="pt-BR"><u>Quem pode usar o CachaBot</u></span></p>
+                        <p><span lang="pt-BR">Voc&ecirc; pode usar nosso aplicativo para o Discord (bot do Discord), denominado </span><span lang="pt-BR"><strong>CachaBot</strong></span><span lang="pt-BR">, para automatizar a tarefa de receber novos membros com um &ldquo;cargo&rdquo; especifico e usar algumas fun&ccedil;&otilde;es implementadas que s&atilde;o descritas na p&aacute;gina do Manual do CachaBot em seu &ldquo;servidor&rdquo; no Discord. Este "servi&ccedil;o" &eacute; disponibilizado ao p&uacute;blico em geral, sem qualquer obriga&ccedil;&atilde;o ou responsabilidade t&eacute;cnica. Este servi&ccedil;o deve ser usado por sua conta e risco, e somente em conformidade com estes Termos e todas as leis aplic&aacute;veis.</span></p>
+                        <p><span lang="pt-BR">b. </span><span lang="pt-BR"><u>Nossa Licen&ccedil;a para Voc&ecirc;</u></span></p>
+                        <p><span lang="pt-BR">Sujeito a estes Termos e nossa pol&iacute;tica de privacidade, n&oacute;s lhe concedemos uma licen&ccedil;a limitada, n&atilde;o exclusiva, intransfer&iacute;vel e revog&aacute;vel para usar nosso Servi&ccedil;o.</span></p>
+                        <p><span lang="pt-BR">c. </span><span lang="pt-BR"><u>Uso Comercial do CachaBOT</u></span></p>
+                        <p><span lang="pt-BR">A menos que expressamente autorizado pelo Desenvolvedor, voc&ecirc; concorda em n&atilde;o exibir, modificar, vender, revender ou transferir para quaisquer fins comerciais, qualquer parte do Servi&ccedil;o ou o uso do CachaBOT.</span></p>
+                        <p><span lang="pt-BR">A instala&ccedil;&atilde;o do CachaBOT pode ser considerada um &ldquo;servi&ccedil;o&rdquo; remunerado de responsabiiidade exclusiva do prestador de servi&ccedil;o e sem v&iacute;nculos com o Desenvolvedor.</span></p>
+                        <p><span lang="pt-BR"><strong>2. Defini&ccedil;oes usadas nesse documento </strong></span></p>
+                        <p><span lang="pt-BR">As seguintes defini&ccedil;&otilde;es ter&atilde;o o mesmo significado independentemente de aparecerem no singular ou no plural. Para os prop&oacute;sitos deste Termo, as palavras cuja letra inicial &eacute; mai&uacute;scula t&ecirc;m significados definidos conforme abaixo especificado:</span></p>
+                        <p><span lang="pt-BR"><strong>Aplicativo</strong></span><span lang="pt-BR"> - significa o programa (software) fornecido por n&oacute;s e baixado por voc&ecirc; (o usu&aacute;rio) em qualquer dispositivo eletr&ocirc;nico, chamado CachaBot.</span></p>
+                        <p><span lang="pt-BR"><strong>Dispositivo</strong></span><span lang="pt-BR"> - significa qualquer dispositivo que possa acessar o Servi&ccedil;o, como um computador, um telefone celular ou um tablet digital.</span></p>
+                        <p><span lang="pt-BR"><strong>Desenvolvedor</strong></span><span lang="pt-BR"> - refere-se ao Grupo de Desenvolvimento do CachaBot (vinculado &agrave; AeroCETI).</span></p>
+                        <p><span lang="pt-BR"><strong>Servi&ccedil;o</strong></span><span lang="pt-BR"> - refere-se ao Aplicativo CachaBot, ao Site ou a ambos.</span></p>
+                        <p><span lang="pt-BR"><strong>Termos e Condi&ccedil;&otilde;es </strong></span><span lang="pt-BR">(tamb&eacute;m referidos como "Termos") - s&atilde;o estes Termos e Condi&ccedil;&otilde;es que formam o acordo integral entre o Usu&aacute;rio e O Desenvolvedor em rela&ccedil;&atilde;o ao uso do Servi&ccedil;o.</span></p>
+                        <p><span lang="pt-BR"><strong>Servi&ccedil;o de M&iacute;dia Social de Terceiros</strong></span><span lang="pt-BR"> - significa quaisquer servi&ccedil;os ou conte&uacute;do (incluindo dados, informa&ccedil;&otilde;es, produtos ou servi&ccedil;os) fornecidos por terceiros que podem ser exibidos, inclu&iacute;dos ou disponibilizados por meio do Servi&ccedil;o.</span></p>
+                        <p><span lang="pt-BR"><strong>Website</strong></span><span lang="pt-BR"> - refere-se ao Site do CachaBot, acess&iacute;vel em https://cachabot.aeroceti.com.br</span></p>
+                        <p><span lang="pt-BR"><strong>Voc&ecirc;</strong></span><span lang="pt-BR"> - significa o indiv&iacute;duo que acessa ou usa o Servi&ccedil;o, uma empresa, ou outra entidade legal em nome da qual qualquer indiv&iacute;duo esteja acessando ou usando o Servi&ccedil;o, conforme aplic&aacute;vel.</span></p>
+                        <p><span lang="pt-BR"><strong>3. Aceita&ccedil;&atilde;o e uso do Servi&ccedil;o</strong></span></p>
+                        <p><span lang="pt-BR">Estes s&atilde;o os Termos e Condi&ccedil;&otilde;es que regem o uso deste Servi&ccedil;o e o acordo que opera entre Voc&ecirc; e</span><span lang="pt-BR"> o </span><span lang="pt-BR">Desenvolvedor. Estes Termos e Condi&ccedil;&otilde;es estabelecem os direitos e obriga&ccedil;&otilde;es de todos os usu&aacute;rios em rela&ccedil;&atilde;o ao uso do Servi&ccedil;o.</span></p>
+                        <p><span lang="pt-BR">Seu acesso e uso do Servi&ccedil;o est&atilde;o condicionados &agrave; Sua aceita&ccedil;&atilde;o e conformidade com estes Termos e Condi&ccedil;&otilde;es. Estes Termos e Condi&ccedil;&otilde;es se aplicam a todos os visitantes, usu&aacute;rios e outros que acessam ou usam o Servi&ccedil;o.</span></p>
+                        <p><span lang="pt-BR">Voc&ecirc; declara que tem mais de 18 anos. </span><span lang="pt-BR">O</span><span lang="pt-BR"> Desenvolvedor n&atilde;o se responsabiliza pelo uso dos servi&ccedil;os por menores de 18 anos.</span></p>
+                        <p><span lang="pt-BR">Seu acesso e uso do Servi&ccedil;o tamb&eacute;m est&atilde;o condicionados &agrave; Sua aceita&ccedil;&atilde;o e conformidade com a Pol&iacute;tica de Privacidade dO Desenvolvedor. Nossa Pol&iacute;tica de Privacidade descreve Nossas pol&iacute;ticas e procedimentos sobre a coleta, uso e divulga&ccedil;&atilde;o de Suas informa&ccedil;&otilde;es pessoais quando Voc&ecirc; usa o Aplicativo ou o Site e informa sobre Seus direitos de privacidade e como a lei O protege. Leia nossa Pol&iacute;tica de Privacidade com aten&ccedil;&atilde;o antes de usar nosso Servi&ccedil;o.</span></p>
+                        <p><span lang="pt-BR">Ao acessar ou usar o Servi&ccedil;o, Voc&ecirc; concorda em ficar vinculado a estes Termos e Condi&ccedil;&otilde;es. Se Voc&ecirc; discordar de qualquer parte destes Termos e Condi&ccedil;&otilde;es, ent&atilde;o Voc&ecirc; n&atilde;o dever&aacute; usar dos Servi&ccedil;o oferecidos pelo CachaBOT.</span></p>
+                        <p><span lang="pt-BR"><strong>4. </strong></span><span lang="pt-BR"><strong>Isen&ccedil;&atilde;o de responsabilidade "COMO EST&Aacute;" e "CONFORME DISPON&Iacute;VEL"</strong></span></p>
+                        <p><span lang="pt-BR">O Servi&ccedil;o do CachaBot &eacute; fornecido "como est&atilde;o", sem garantia de qualquer tipo, expressa ou impl&iacute;cita. O DESENVOLVEDOR ESPECIFICAMENTE SE ISENTA DE TODOS E QUAISQUER DANOS INDIRETOS, INCIDENTAIS, ESPECIAIS, CONSEQUENCIAIS OU PUNITIVOS, OU QUALQUER PERDA DE LUCROS OU RECEITAS, INCORRIDOS DIRETA OU INDIRETAMENTE, OU QUALQUER PERDA DE DADOS, USO, BOA VONTADE OU OUTRAS PERDAS INTANG&Iacute;VEIS, RESULTANTES DE:</span></p>
+                        <p><span lang="pt-BR"><strong>A.</strong></span><span lang="pt-BR"> SEU ACESSO, DO USO OU DA INCAPACIDADE DE ACESSAR OU DE USAR O NOSSO SERVI&Ccedil;O;</span></p>
+                        <p><span lang="pt-BR"><strong>B.</strong></span><span lang="pt-BR"> QUALQUER CONDUTA OU CONTE&Uacute;DO DE TERCEIROS, QUALQUER CONDUTA DIFAMAT&Oacute;RIA, OFENSIVA OU ILEGAL DE OUTROS USU&Aacute;RIOS OU TERCEIROS; E</span></p>
+                        <p><span lang="pt-BR"><strong>C.</strong></span><span lang="pt-BR"> ACESSO, USO OU ALTERA&Ccedil;&Atilde;O N&Atilde;O AUTORIZADOS DE SUAS TRANSMISS&Otilde;ES OU CONTE&Uacute;DO.</span></p>
+                        <p><span lang="pt-BR">O Desenvolvedor n&atilde;o assume nenhuma responsabilidade e n&atilde;o assume nenhuma obriga&ccedil;&atilde;o por qualquer Conte&uacute;do d</span><span lang="pt-BR">e</span><span lang="pt-BR"> Usu&aacute;rio</span><span lang="pt-BR">s</span><span lang="pt-BR"> que o mesmo (ou qualquer outro usu&aacute;rio, bem como terceiros) publique ou transmita usando nosso Servi&ccedil;o.</span></p>
+                        <p><span lang="pt-BR">O Servi&ccedil;o &eacute; fornecido a Voc&ecirc; "COMO EST&Aacute;" e "CONFORME DISPON&Iacute;VEL" e com todas as falhas e defeitos sem garantia de qualquer tipo. Na extens&atilde;o m&aacute;xima permitida pela lei aplic&aacute;vel, O Desenvolvedor, em seu pr&oacute;prio nome expressamente se isenta de todas as garantias, sejam expressas, impl&iacute;citas, estatut&aacute;rias ou de outra forma, com rela&ccedil;&atilde;o ao Servi&ccedil;o, incluindo todas as garantias impl&iacute;citas de comercializa&ccedil;&atilde;o, adequa&ccedil;&atilde;o a uma finalidade espec&iacute;fica, t&iacute;tulo e n&atilde;o viola&ccedil;&atilde;o, e garantias que possam surgir do curso de negocia&ccedil;&atilde;o, curso de desempenho, uso ou pr&aacute;tica comercial.</span></p>
+                        <p><span lang="pt-BR">Sem limita&ccedil;&atilde;o ao acima exposto, O Desenvolvedor n&atilde;o fornece nenhuma garantia ou compromisso, e n&atilde;o faz nenhuma representa&ccedil;&atilde;o de qualquer tipo de que o Servi&ccedil;o atender&aacute; aos Seus requisitos, alcan&ccedil;ar&aacute; quaisquer resultados pretendidos, ser&aacute; compat&iacute;vel ou funcionar&aacute; com qualquer outro software, aplicativo, sistema ou servi&ccedil;o, operar&aacute; sem interrup&ccedil;&atilde;o, atender&aacute; a quaisquer padr&otilde;es de desempenho ou confiabilidade ou estar&aacute; livre de erros ou que quaisquer erros ou defeitos podem ou ser&atilde;o corrigidos.</span></p>
+                        <p><span lang="pt-BR">Sem limitar o acima exposto, nem O Desenvolvedor nem nenhum provedor da empresa faz qualquer representa&ccedil;&atilde;o ou garantia de qualquer tipo, expressa ou impl&iacute;cita: (i) quanto &agrave; opera&ccedil;&atilde;o ou disponibilidade do Servi&ccedil;o, ou as informa&ccedil;&otilde;es, conte&uacute;do e materiais ou produtos inclu&iacute;dos nele; (ii) que o Servi&ccedil;o ser&aacute; ininterrupto ou livre de erros; (iii) quanto &agrave; precis&atilde;o, confiabilidade ou atualidade de qualquer informa&ccedil;&atilde;o ou conte&uacute;do fornecido atrav&eacute;s do Servi&ccedil;o; ou (iv) que o Servi&ccedil;o, seus servidores, o conte&uacute;do ou e-mails enviados de/ou em nome d</span><span lang="pt-BR">o</span><span lang="pt-BR"> Desenvolvedor est&atilde;o livres de v&iacute;rus, scripts, cavalos de Troia, worms, malware, bombas-rel&oacute;gio ou outros componentes prejudiciais.</span></p>
+                        <p><span lang="pt-BR">Algumas jurisdi&ccedil;&otilde;es n&atilde;o permitem a exclus&atilde;o de certos tipos de garantias ou limita&ccedil;&otilde;es em direitos estatut&aacute;rios aplic&aacute;veis de um consumidor, portanto, algumas ou todas as exclus&otilde;es e limita&ccedil;&otilde;es acima podem n&atilde;o se aplicar a Voc&ecirc;. Mas, em tal caso, as exclus&otilde;es e limita&ccedil;&otilde;es estabelecidas nesta se&ccedil;&atilde;o ser&atilde;o aplicadas na maior extens&atilde;o poss&iacute;vel sob a lei aplic&aacute;vel.</span></p>
+                        <p><span lang="pt-BR"><strong>5. Resolu&ccedil;&atilde;o de Disputas</strong></span></p>
+                        <p><span lang="pt-BR">Para qualquer disputa que voc&ecirc; tenha com </span><span lang="pt-BR">o Desenvolvedor</span><span lang="pt-BR">, voc&ecirc; concorda em primeiro entrar em contato conosco e tentar resolver a disputa informalmente. Se</span><span lang="pt-BR"> o Desenvolvedor</span><span lang="pt-BR"> n&atilde;o tiver conseguido resolver a disputa com voc&ecirc; informalmente, cada um de n&oacute;s concorda em resolver qualquer reivindica&ccedil;&atilde;o, disputa ou controv&eacute;rsia (excluindo reivindica&ccedil;&otilde;es por medida liminar ou outra medida equitativa) decorrente de ou em conex&atilde;o com ou relacionada a estes Termos sob a jurisdi&ccedil;&atilde;o exclusiva dos Tribunais do Amazonas, Brasil.</span></p>
+                        <p><span lang="pt-BR">Nada nesta Se&ccedil;&atilde;o impedir&aacute; qualquer uma das partes de buscar medida liminar ou outra medida equitativa dos tribunais para quest&otilde;es relacionadas &agrave; seguran&ccedil;a de dados, propriedade intelectual ou acesso n&atilde;o autorizado ao Servi&ccedil;o. TODAS AS REIVINDICA&Ccedil;&Otilde;ES DEVEM SER APRESENTADAS NA CAPACIDADE INDIVIDUAL DAS PARTES, E N&Atilde;O COMO AUTOR OU MEMBRO DE CLASSE EM QUALQUER SUPOSTA CLASSE OU PROCESSO REPRESENTATIVO E, A MENOS QUE CONCORDEMOS DE OUTRA FORMA, O &Aacute;RBITRO N&Atilde;O PODE CONSOLIDAR AS REIVINDICA&Ccedil;&Otilde;ES DE MAIS DE UMA PESSOA.</span></p>
+                        <p><span lang="pt-BR"><strong>6. Termos gerais</strong></span></p>
+                        <p><span lang="pt-BR"><u>a. Procedimentos de notifica&ccedil;&atilde;o e altera&ccedil;&otilde;es a estes Termos</u></span></p>
+                        <p><span lang="pt-BR">O Desenvolvedor</span><span lang="pt-BR"> reserva-se o direito de determinar a forma e os meios de fornecer notifica&ccedil;&otilde;es a voc&ecirc;, e voc&ecirc; concorda em receber avisos legais eletronicamente, se assim o desejarmos. Podemos revisar estes Termos de tempos em tempos e a vers&atilde;o mais atual ser&aacute; sempre publicada em nosso site. Ao continuar a acessar ou usar o Servi&ccedil;o ap&oacute;s as revis&otilde;es entrarem em vigor, voc&ecirc; concorda em ficar vinculado aos Termos revisados. Se voc&ecirc; n&atilde;o concordar com os novos termos, pare de usar o Servi&ccedil;o.</span></p>
+                        <p><span lang="pt-BR"><u>b</u></span><span lang="pt-BR"><u>. </u></span><span lang="pt-BR"><u>R</u></span><span lang="pt-BR"><u>en&uacute;ncia </u></span><span lang="pt-BR"><u>adicional</u></span></p>
+                        <p><span lang="pt-BR">Nenhuma ren&uacute;ncia de qualquer um dos termos deste Termos ser&aacute; considerada uma ren&uacute;ncia adicional ou cont&iacute;nua de tal termo ou qualquer outro termo, e a falha d</span><span lang="pt-BR">o</span><span lang="pt-BR">Desenvolvedor</span><span lang="pt-BR"> em fazer valer qualquer direito ou disposi&ccedil;&atilde;o sob estes Termos n&atilde;o constituir&aacute; uma ren&uacute;ncia de tal direito ou disposi&ccedil;&atilde;o.</span></p>
+                        <p><span lang="pt-BR"><strong>7. Validade e Forum destes termos</strong></span></p>
+                        <p><span lang="pt-BR">Estes Termos ser&atilde;o regidos pelas leis do Brasil e est&atilde;o sujeitos &agrave; jurisdi&ccedil;&atilde;o exclusiva dos tribunais no Amazonas.</span></p>
+                        <p><span lang="pt-BR">Este Termo de uso &eacute; valido a partir de </span><span th:text="#{home.terms.validade.date}"/>.</span></p>                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PRE-FOOTER COMUM -->
+    <div th:insert="~{modulos/fragmento-links-web :: pre-footer}"></div>
+           
+    <!-- FOOTER -->
+    <div th:insert="~{modulos/fragmento-footer-home :: navbar-footer}"></div>
+
+</body>
+</html>

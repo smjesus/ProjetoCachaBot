@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>CachaBOT</title>
+</head>
+    
+    <body id="page-top">
+
+        <div th:insert="~{modulos/fragmento-menu-web :: navbar-menuprincipal}"></div>
+        
+        <!-- Header-->
+        <header class="masthead d-flex align-items-center">
+            <div class="container px-4 px-lg-5 text-center">
+                <h1 class="mb-1">CachaBOT</h1>
+                <h3 style="text-align: center;"><strong><span th:text="#{home.text.private}"/></strong></h3>
+            </div>
+        </header>
+
+        <!-- Politics -->
+        <section class="content-section bg-light" id="about">
+            <div class="container px-4 px-lg-5 justify-content-center">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-10">
+                        <p>Classifica&ccedil;&atilde;o: P&uacute;blica<br />
+                           Elabora&ccedil;&atilde;o: Seguran&ccedil;a da Informa&ccedil;&atilde;o<br />
+                           Data de cria&ccedil;&atilde;o: 01/06/2025 Vers&atilde;o: 1.0<br />
+                           Revis&atilde;o: <span th:text="#{home.privacity.revision}"/> &ndash; Vers&atilde;o <span th:text="#{home.privacity.version}"/></p>
+                        <p><strong>1. Quem somos</strong></p>
+                        <p>A <strong>AeroCETI</strong> &eacute; uma empresa de Tecnologia; cediada na cidade de Manaus (Amazonas - Brasil). Para mais informa&ccedil;&otilde;es acesse nosso site em <a class="text-black" href="https://www.aeroceti.com.br." target="_blank"><strong>https://www.aeroceti.com.br.</strong></a></p>
+                        <p>A Pol&iacute;tica de Privacidade do <strong>CachaBOT</strong> foi criada para reafirmar nosso compromisso com a seguran&ccedil;a, privacidade e a transpar&ecirc;ncia no tratamento das suas informa&ccedil;&otilde;es vinculadas &agrave; este WEB site como do Aplicativo para o Discord (BOT). Temos aqui a descri&ccedil;&atilde;o de como coletamos e tratamos dados ao trafegar em nosso site; assim, estar&aacute; ciente ao usar este servi&ccedil;o.</p>
+                        <p>Ao acessar e/ou utilizar o conte&uacute;do deste site ou instalar e/ou usar o CachaBOT, voc&ecirc; expressa sua aceita&ccedil;&atilde;o plena e sem reservas aos termos aqui constantes, para todos os fins de direito. Se voc&ecirc; n&atilde;o concordar com algum dos termos e regras aqui previstos, n&atilde;o dever&aacute; acessar este site e/ou utilizar o servi&ccedil;o do CachaBOT.</p>
+                        <p><strong>2. Quais dados pessoais coletamos e porque?</strong></p>
+                        <p>No formul&aacute;rio de contato (quando houver), coletamos e mantemos as informa&ccedil;&otilde;es: nome, e-mail e telefone para efetuarmos uma comunica&ccedil;&atilde;o com os usu&aacute;rios do CachaBOT.</p>
+                        <p>Os dados armazenados pelo CachaBOT s&atilde;o coletadas pelo tempo necess&aacute;rio para fornecer o servi&ccedil;o solicitado. Quando armazenamos dados, protegemos dentro de meios comercialmente aceit&aacute;veis para evitar perdas e roubos, bem como acesso, divulga&ccedil;&atilde;o, c&oacute;pia, uso ou modifica&ccedil;&atilde;o n&atilde;o autorizados.</p>
+                        <p><strong>3. Uso de cookies</strong></p>
+                        <p><em><strong>N&oacute;s n&atilde;o utilizamos cookies</strong></em>. Cookies s&atilde;o pequenos arquivos de textos simples que sites armazenam em seu navegador para salvar suas prefer&ecirc;ncias e configura&ccedil;&otilde;es. Por exemplo, quando voc&ecirc; acessa um site pela primeira vez, que faz uso de cookies, este site envia um arquivo de texto com suas prefer&ecirc;ncias para o seu navegador, como: regi&atilde;o de onde voc&ecirc; est&aacute; acessando, seu endere&ccedil;o de e-mail, idioma escolhido, cores, produtos que voc&ecirc; poder&aacute; gostar com base em suas pesquisas, e etc. Quando voc&ecirc; acessar o site novamente, seu navegador ir&aacute; enviar este arquivo para o site, desta forma as suas configura&ccedil;&otilde;es e prefer&ecirc;ncias ser&atilde;o aplicadas automaticamente sem que voc&ecirc; precise configurar tudo de novo (a menos que voc&ecirc; queira).</p>
+                        <p><strong>4. Com quem partilhamos seus dados</strong></p>
+                        <p><em><strong>N&atilde;o compartilhamos seus dados com terceiros.</strong></em></p>
+                        <p>O usu&aacute;rio se compromete a fazer uso adequado dos conte&uacute;dos e das informa&ccedil;&otilde;es que o servi&ccedil;o do BOT manipula, com car&aacute;ter enunciativo, mas n&atilde;o limitativo:</p>
+                        <ul>
+                            <li>N&atilde;o se envolver em atividades que sejam ilegais ou contr&aacute;rias &agrave; boa f&eacute; a &agrave; ordem p&uacute;blica;</li>
+                            <li>N&atilde;o divulgar conte&uacute;do ou propaganda de natureza racista, xenof&oacute;bica, apostas online, pornografia ilegal, de apologia ao terrorismo ou contra os direitos humanos;</li>
+                            <li>N&atilde;o causar danos aos sistemas f&iacute;sicos (hardwares) e l&oacute;gicos (softwares) do EOS-Manaus, de seus fornecedores ou terceiros, introduzindo ou disseminando v&iacute;rus de computador ou quaisquer outros sistemas de hardware ou software que sejam capazes de causar os danos mencionados.</li>
+                        </ul>
+                        <p><strong>5. Considera&ccedil;&otilde;es finais</strong></p>
+                        <p>Nos reservamos o direito de atualizar estes termos e condi&ccedil;&otilde;es de uso sem qualquer aviso pr&eacute;vio.</p>                        
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- PRE-FOOTER COMUM -->
+        <div th:insert="~{modulos/fragmento-links-web :: pre-footer}"></div>
+               
+        <!-- ROODAPE DA PAGINA -->
+        <div th:insert="~{modulos/fragmento-footer-home :: navbar-footer}"></div>
+        
+    </body>
+</html>

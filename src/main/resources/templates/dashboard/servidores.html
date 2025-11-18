@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>CachaBOT</title>
+</head>
+    
+<body th:style="'background-image:url(' + @{/assets/cacha_bg.png} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+    <!-- Full Page Container -->
+    <div id="page-container">
+        <!-- CONTEUDO DA PAGINA  -->
+        <div id="content-wrap">
+            <!--  MENU DO SISTEMA  -->
+            <div th:insert="~{modulos/fragmento-menu-sistema :: navbar-menusistema}"></div>
+            <!--  AREA DO CONTEUDO DINAMICO  -->
+            <section class="d-flex align-items-center">
+                <div class="col" style="margin-top: 4%;">
+                    <!--    Titulo da Secao     -->
+                    <div class="d-flex align-items-center justify-content-between" style="padding-left: 2%;padding-right: 2%;">
+                        <h1 th:text="#{servidor.list}" class="m-0"></h1>
+                        <a class="btn-alink" th:href="@{/servidor/listar/{ordenar}(ordenar=true)}" sec:authorize="hasAuthority('Administrador')"  th:title="#{global.link.print}">
+                            <i class="fa-solid fa-print fa-2xl" style="color: #000000;"></i></a>
+                    </div>
+                    <!--    Tabela com os dados da secao     -->
+                    <table class="table table-hover table-borderless table-striped cachaCard">
+                        <thead>
+                            <tr>
+                                <th th:text="#{table.servidor.id}"          style="width: 3%; text-align: center;"></th>
+                                <th th:text="#{table.servidor.name}"        style="width: 20%;"></th>
+                                <th th:text="#{table.servidor.owner}"       style="width: 10%;"></th>
+                                <th th:text="#{table.servidor.salaBVinda}"  style="width: 20%;"></th>
+                                <th th:text="#{table.servidor.ativo}"       style="width: 15%;"></th>
+                                <th th:text="#{table.servidor.cadastro}"    style="width: 15%;"></th>
+                                <th th:text="#{table.servidor.actions}"     style="text-align: center;" sec:authorize="hasAnyAuthority('Administrador', 'Gerente')"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${servidor.empty}" class="text-center">
+                                <td colspan="7" th:text="#{table.servidor.vazio}"></td>
+                            </tr>
+                            <tr th:each="server : ${servidor}">
+                                <td  style="width: 3%; text-align: center;"><span th:text="${server.servidorID}"></span></td>
+                                <td><span th:text="${server.nome}"></span></td>
+                                <td><span th:text="${server.colaborador?.nomePessoal ?: 'Não informado'}"></span></td>
+                                <td><span th:text="${server.salaBoasVindas}"></span></td>
+                                <td><span th:text="${server.ativo} ? 'ATIVO' : 'DESATIVADO'"></span></td>
+                                <td><span th:text="${server.cadastro} ? 'ATIVO' : 'DESATIVADO'"></span></td>
+
+                                <td style="text-align: center;"  sec:authorize="hasAnyAuthority('Administrador', 'Gerente')">
+                                    <a class="btn-alink" th:href="@{/servidor/excluir/{id}(id=${server.entidadeID})}"
+                                       th:if="${#authorization.expression('hasAuthority(''Administrador'')') 
+                                                    or (#authorization.expression('hasAuthority(''Gerente'')') 
+                                                    and #authentication.name == server.colaborador?.contaEmail)}"
+                                        th:title="#{global.link.delete}"
+                                        onclick="return confirmarExclusao(event, this);">
+                                        <i class="fa-solid fa-trash  text-black"></i>
+                                    </a>&nbsp;
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                    <nav style="margin-top: 20px;" th:if="${servidor.totalPages > 0}">
+                        <ul class="pagination" style="justify-content: center;">
+                            <!-- Botão Previous -->
+                            <li class="page-item" th:classappend="${servidor.first} ? 'disabled'">
+                                <a class="page-link"
+                                    th:href="@{/servidor/paginar/{page}/{pageSize}(page=${servidor.number}, pageSize=15)}">
+                                    <span th:text="#{table.pagination.previous}"></span>
+                                </a>
+                            </li>
+                            <!-- Links das páginas -->
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(0, servidor.totalPages - 1)}"
+                                th:classappend="${servidor.number == i} ? 'active'">
+                                <a class="page-link"
+                                   th:text="${i + 1}"
+                                   th:href="@{/servidor/paginar/{page}/{pageSize}(page=${i+1}, pageSize=15)}"></a>
+                            </li>
+                            <!-- Botão Next -->
+                            <li class="page-item" th:classappend="${servidor.last} ? 'disabled'">
+                                <a class="page-link"
+                                    th:href="@{/servidor/paginar/{page}/{pageSize}(page=${servidor.number + 2}, pageSize=15)}">
+                                    <span th:text="#{table.pagination.next}"></span>
+                                </a>
+                            </li>                 
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+            <!--  FIM DO CONTEUDO DINAMICO  -->
+            <!-- ROODAPE DA PAGINA -->
+            <div th:insert="~{modulos/fragmento-footer-blank :: footer-limpo}"></div>
+        </div>
+    </div>
+</body>
+</html>

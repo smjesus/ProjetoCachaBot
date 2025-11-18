@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>CachaBOT</title>
+</head>
+    
+<body id="page-top">
+
+    <div th:insert="~{modulos/fragmento-menu-web :: navbar-menuprincipal}"></div>
+    
+    <!-- Header-->
+    <header class="masthead d-flex align-items-center">
+        <div class="container px-4 px-lg-5 text-center">
+            <h1 class="mb-1">CachaBOT</h1>
+            <h3 style="text-align: center;"><strong><span th:text="#{home.text.private}"/></strong></h3>
+        </div>
+    </header>
+
+    <!-- Privacy Policy -->
+    <section class="content-section bg-light" id="about">
+        <div class="container px-4 px-lg-5 justify-content-center">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-10">
+
+                    <p>Classification: Public<br />
+                    Prepared by: Information Security<br />
+                    Creation date: 01/Jun/2025 Version: 1.0<br />
+                    Revision: <span th:text="#{home.privacity.revision}"/> – Version <span th:text="#{home.privacity.version}"/></p>
+
+                    <p><strong>1. Who we are</strong></p>
+                    <p><strong>AeroCETI</strong> is a technology company headquartered in Manaus (Amazonas – Brazil). For more information, visit our website at 
+                    <a class="text-black" href="https://www.aeroceti.com.br." target="_blank"><strong>https://www.aeroceti.com.br.</strong></a></p>
+
+                    <p>The <strong>CachaBOT</strong> Privacy Policy was created to reaffirm our commitment to security, privacy, and transparency in handling your information linked to this website as well as the Discord application (BOT). Here we describe how we collect and process data while you browse our site, so that you are informed when using this service.</p>
+
+                    <p>By accessing and/or using the content of this website or installing and/or using CachaBOT, you fully and unreservedly accept the terms contained herein, for all legal purposes. If you do not agree with any of the terms and rules provided here, you must not access this site and/or use the CachaBOT service.</p>
+
+                    <p><strong>2. What personal data do we collect and why?</strong></p>
+                    <p>In the contact form (when available), we collect and store the following information: name, email, and phone number, in order to establish communication with CachaBOT users.</p>
+                    <p>The data stored by CachaBOT is collected for as long as necessary to provide the requested service. When we store data, we protect it using commercially acceptable means to prevent loss and theft, as well as unauthorized access, disclosure, copying, use, or modification.</p>
+
+                    <p><strong>3. Use of cookies</strong></p>
+                    <p><em><strong>We do not use cookies.</strong></em> Cookies are small, simple text files that websites store in your browser to save your preferences and settings. For example, when you first access a website that uses cookies, that site sends a text file with your preferences to your browser — such as: the region from which you are accessing, your email address, chosen language, color preferences, or products you might like based on your searches, etc. When you visit the site again, your browser sends this file back to the site, so your settings and preferences are applied automatically without you having to configure everything again (unless you choose to).</p>
+
+                    <p><strong>4. With whom do we share your data</strong></p>
+                    <p><em><strong>We do not share your data with third parties.</strong></em></p>
+                    <p>The user agrees to make proper use of the content and information handled by the BOT service, including but not limited to the following:</p>
+                    <ul>
+                        <li>Not engaging in activities that are illegal or contrary to good faith and public order;</li>
+                        <li>Not publishing or distributing content or advertisements of a racist, xenophobic, online gambling, illegal pornography, terrorist, or human rights–violating nature;</li>
+                        <li>Not causing damage to the physical systems (hardware) or logical systems (software) of EOS-Manaus, its suppliers, or third parties, by introducing or spreading computer viruses or any other hardware or software systems capable of causing such damage.</li>
+                    </ul>
+
+                    <p><strong>5. Final considerations</strong></p>
+                    <p>We reserve the right to update these terms and conditions of use without prior notice.</p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PRE-FOOTER -->
+    <div th:insert="~{modulos/fragmento-links-web :: pre-footer}"></div>
+           
+    <!-- FOOTER -->
+    <div th:insert="~{modulos/fragmento-footer-home :: navbar-footer}"></div>
+    
+</body>
+</html>

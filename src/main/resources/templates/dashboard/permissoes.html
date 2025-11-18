@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>CachaBOT</title>
+</head>
+    
+<body th:style="'background-image:url(' + @{/assets/cacha_bg.png} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+    <!-- Full Page Container -->
+    <div id="page-container">
+        <!-- CONTEUDO DA PAGINA  -->
+        <div id="content-wrap">
+            <!--  MENU DO SISTEMA  -->
+            <div th:insert="~{modulos/fragmento-menu-sistema :: navbar-menusistema}"></div>
+            <!--  AREA DO CONTEUDO DINAMICO  -->
+            <section class="d-flex align-items-center">
+                <div class="col" style="margin-top: 4%;">
+                    <!--    Titulo da Secao     -->
+                    <div class="d-flex align-items-center justify-content-between" style="padding-left: 2%;padding-right: 2%;">
+                        <h1 th:text="#{permissao.list}" class="m-0"></h1>
+                        <!-- Ícone de Impressão -->
+                        <div>
+                            <a class="btn-alink"
+                                th:href="@{/usuario/listar/{ordenar}(ordenar=true)}"
+                                sec:authorize="hasAuthority('Administrador')"
+                                th:title="#{global.link.print}">
+                                <i class="fa-solid fa-print fa-2xl" style="color: #000000; padding-left: 5px;"></i>
+                            </a>
+                            <!-- Novo botão: Cadastrar Nova Permissão -->
+                            <a class="btn-alink"
+                               href="#"
+                               th:title="#{table.permissao.nova}"
+                               sec:authorize="hasAuthority('Administrador')"
+                               onclick="abrirFormularioPermissao(null)">
+                                <i class="fa-solid fa-plus-circle fa-2xl" style="color: #000000;"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!--    Tabela com os dados da secao     -->
+                    <table class="table table-hover table-borderless table-striped cachaCard">
+                        <thead>
+                            <tr>
+                                <th th:text="#{table.permissao.id}"          style="width: 6%; text-align: center;"></th>
+                                <th th:text="#{table.permissao.name}"        style="width: 85%;"></th>
+                                <th th:text="#{table.permissao.actions}"     style="text-align: center;"  colspan="2" sec:authorize="hasAuthority('Administrador')"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${permissao.empty}" class="text-center">
+                                <td colspan="4" th:text="#{table.permissao.vazio}"></td>
+                            </tr>
+                            <tr th:each="nivel : ${permissao}">
+                                <td  style="width: 6%; text-align: center;"><span th:text="${nivel.entidadeID}"></span></td>
+                                <td   style="width: 85%;"><span th:text="${nivel.nome}"></span></td>
+                                <td  style="width: 6%; text-align: center;" sec:authorize="hasAuthority('Administrador')">
+                                    <a class="btn-alink"
+                                       href="#"
+                                       sec:authorize="hasAuthority('Administrador')"
+                                       th:title="#{global.link.edit}"
+                                       th:attr="data-id=${nivel.entidadeID}, data-nome=${nivel.nome}"
+                                       onclick="abrirFormularioPermissao(this)">
+                                        <i class="fa-solid fa-pen-to-square text-black"></i>
+                                    </a>&nbsp;
+                                </td>
+                                <td  style="width: 3%; text-align: center;" sec:authorize="hasAuthority('Administrador')">
+                                    <a class="btn-alink" th:href="@{/permissao/excluir/{id}(id=${nivel.entidadeID})}" sec:authorize="hasAuthority('Administrador')"
+                                        onclick="return confirmarExclusao(event, this);"  th:title="#{global.link.delete}">
+                                        <i class="fa-solid fa-trash  text-black"></i>
+                                    </a>&nbsp;
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                    <nav style="margin-top: 20px;" th:if="${permissao.totalPages > 0}">
+                        <ul class="pagination" style="justify-content: center;">
+                            <!-- Botão Previous -->
+                            <li class="page-item" th:classappend="${permissao.first} ? 'disabled'">
+                                <a class="page-link"
+                                    th:href="@{/permissao/paginar/{page}/{pageSize}(page=${permissao.number}, pageSize=15)}">
+                                    <span th:text="#{table.pagination.previous}"></span>
+                                </a>
+                            </li>
+                            <!-- Links das páginas -->
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(0, permissao.totalPages - 1)}"
+                                th:classappend="${permissao.number == i} ? 'active'">
+                                <a class="page-link"
+                                   th:text="${i + 1}"
+                                   th:href="@{/permissao/paginar/{page}/{pageSize}(page=${i+1}, pageSize=15)}"></a>
+                            </li>
+                            <!-- Botão Next -->
+                            <li class="page-item" th:classappend="${permissao.last} ? 'disabled'">
+                                <a class="page-link"
+                                    th:href="@{/permissao/paginar/{page}/{pageSize}(page=${permissao.number + 2}, pageSize=15)}">
+                                    <span th:text="#{table.pagination.next}"></span>
+                                </a>
+                            </li>                 
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+            <!--  FIM DO CONTEUDO DINAMICO  -->
+            <!-- ROODAPE DA PAGINA -->
+            <div th:insert="~{modulos/fragmento-footer-blank :: footer-limpo}"></div>
+        </div>
+    </div>
+    <!--    FORMULARIO POPUP DE EDICAO E CADASTRO DE PERMISSOES    -->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    function abrirFormularioPermissao(element) {
+        const id = element ? element.getAttribute('data-id') : null;
+        const nome = element ? element.getAttribute('data-nome') : null;
+
+        const titulo = id ? /*[[#{popup.permissao.editar.titulo}]]*/ 'Editar Permissão'
+                          : /*[[#{popup.permissao.novo.titulo}]]*/ 'Nova Permissão';
+
+        const urlSalvarPermissao = /*[[@{/permissao/salvar}]]*/ "";
+
+        const labelTxt = /*[[#{popup.permissao.nome-campo}]]*/ 'Nova Permissão';
+
+        const campoRequerido = /*[[#{global.field.required}]]*/ "Campo obrigatório!" ;
+
+        Swal.fire({
+            title: titulo,
+            html: `
+                <form id="formPermissao" action="${urlSalvarPermissao}" method="post">
+                    <input type="hidden" name="_csrf" id="csrfField">
+                    <input type="hidden" name="entidadeID" value="${id || ''}">
+                    <div class="form-group" style="text-align:center;">
+                        <label for="nome">${labelTxt}</label>
+                        <input type="text" id="nome" name="nome" class="swal2-input" required value="${nome || ''}">
+                    </div>
+                </form>
+            `,
+            showCancelButton: true,
+            confirmButtonText: /*[[#{popup.permissao.salvar}]]*/ 'Salvar',
+            cancelButtonText: /*[[#{popup.permissao.cancelar}]]*/ 'Cancelar',
+            focusConfirm: false,
+            didOpen: () => {
+                // injeta o token CSRF no campo oculto
+                const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+                document.getElementById('csrfField').value = token;
+            },
+            preConfirm: () => {
+                const form = document.getElementById('formPermissao');
+                if (!form.nome.value.trim()) {
+                    Swal.showValidationMessage(campoRequerido);
+                    return false;
+                }
+                form.submit();
+            }
+        });
+    }
+    /*]]>*/
+    </script>
+</body>
+</html>

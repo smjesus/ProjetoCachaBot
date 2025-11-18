@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>CachaBOT</title>
+</head>
+    
+<body th:style="'background-image:url(' + @{/assets/cacha_bg.png} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+    <!-- Full Page Device -->
+    <div id="page-container">
+        <!-- CONTEUDO DA PAGINA  -->
+        <div id="content-wrap">
+            <!--  MENU DO SISTEMA  -->
+            <div th:insert="~{modulos/fragmento-menu-sistema :: navbar-menusistema}"></div>            
+            <!--  AREA DO CONTEUDO DINAMICO  -->
+            <section class="d-flex align-items-center">
+                <div class="col" style="margin-top: 4%;">
+                    <!--    Titulo da Secao     -->
+                    <h2 th:text="#{usuario.edit.titulo}"></h2>
+                    <div class="alert alert-danger" th:if="${mensagem}">
+                        <span th:text="${mensagem}"></span>
+                    </div>
+
+                    
+                    <!--    Formulario com os dados da secao     -->
+                    <form class="cachaCard" action="#" th:action="@{/usuario/atualizar}" th:object="${colaborador}" method="post">
+                    
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+   
+                        <!--  NOME  DO USUARIO   -->
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" th:text="#{form.user.nome}"></label>
+                            <div class="col-sm-5">
+                                <input class="form-control" type="text" th:field="*{nomePessoal}" /> 
+                            </div>
+                            <div class="col-sm-5"> 
+                                <span class="mensagem" th:if="${#fields.hasErrors('nomePessoal')}" th:errors="*{nomePessoal}"></span>
+                            </div>				
+                        </div>
+                        
+                        <!--  EMAIL  DO USUARIO   -->
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" th:text="#{form.user.email}"></label>
+                            <div class="col-sm-5">
+                                <input class="form-control" type="email" th:field="*{contaEmail}" /> 
+                            </div>
+                            <div class="col-sm-5"> 
+                                <span class="mensagem" th:if="${#fields.hasErrors('contaEmail')}" th:errors="*{contaEmail}"></span>
+                            </div>				
+                        </div>
+
+                        <!-- SENHA -->
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" th:text="#{form.user.senha}"></label>
+                            <div class="col-sm-5">
+                                <input class="form-control" type="password" th:field="*{codigoAcesso}" required="true" minlength="8"
+                                       pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$"
+                                       title="A senha deve ter ao menos 8 caracteres, incluindo letra maiúscula, minúscula, número e símbolo." />
+                            </div>
+                            <div class="col-sm-5 alert">
+                                <span class="mensagem" th:if="${#fields.hasErrors('codigoAcesso')}"  th:errors="*{codigoAcesso}"></span>
+                            </div>
+                        </div>
+                        <!-- CONFIRMAR SENHA -->
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" th:text="#{form.user.confirma-senha}"></label>
+                            <div class="col-sm-5">
+                                <input class="form-control" type="password" th:field="*{confirmarSenha}" required title="Repita a mesma senha." />
+                            </div>
+                            <div class="col-sm-5 alert">
+                                <span class="mensagem" th:if="${#fields.hasErrors('confirmarSenha')}" th:errors="*{confirmarSenha}"></span>
+                            </div>
+                        </div>
+                        
+                        <!--  STATUS DO USUÁRIO  -->
+                        <div class="row mb-3 align-items-center">
+                            <label class="col-sm-2 col-form-label" th:text="#{form.user.active}"></label>
+                            <div class="col-sm-5">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"     th:field="*{ativo}" th:value="true" id="ativoTrue" />
+                                    <label class="form-check-label" for="ativoTrue"  th:text="#{form.user.yes}">Ativo</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio"     th:field="*{ativo}" th:value="false"id="ativoFalse" />
+                                    <label class="form-check-label" for="ativoFalse" th:text="#{form.user.no}">Inativo</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <span class="mensagem" th:if="${#fields.hasErrors('ativo')}" th:errors="*{ativo}"></span>
+                            </div>
+                        </div>
+
+                        <!--  NÍVEL DE ACESSO  -->
+                        <div class="row mb-3"  sec:authorize="hasAuthority('Administrador')" >
+                            <label class="col-sm-2 col-form-label" th:text="#{form.user.accessLevel}"></label>
+                            <div class="col-sm-5">
+                                <select class="form-select" th:field="*{nivelAcesso}">
+                                    <option value="" th:text="#{form.user.select}">-- Selecione --</option>
+                                    <option th:each="nivel : ${permissoesList}"
+                                            th:value="${nivel.entidadeID}"
+                                            th:text="${nivel.nome}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-5">
+                                <span class="mensagem"
+                                      th:if="${#fields.hasErrors('nivelAcesso')}"
+                                      th:errors="*{nivelAcesso}"></span>
+                            </div>
+                        </div>
+
+                        <!--  CAMPOS HIDDEN  -->
+                        <div class="row mb-3">
+                            <div class="col-sm-12">
+                                <input class="form-control" type="hidden" th:field="*{nivelAcesso}"  sec:authorize="hasAuthority('Gerente')"  /> 
+                                <input class="form-control" type="hidden" th:field="*{entidadeID}" /> 
+                                <input class="form-control" type="hidden" th:field="*{versao}" /> 
+                            </div>
+                        </div>                                     
+
+                        <input  class="btn btn-primary btn-xl" type="submit" th:value="#{form.user.update}"/>
+                    </form>	
+                </div>
+            </section>
+            <!--  FIM DO CONTEUDO DINAMICO  -->
+            <!--  RODAPE DA PAGINA  -->
+            <div th:insert="~{modulos/fragmento-footer-blank :: footer-limpo}"></div>
+        </div>
+    </div>
+</body>
+</html>

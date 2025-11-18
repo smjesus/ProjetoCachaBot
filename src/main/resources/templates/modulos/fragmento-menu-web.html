@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org" >
+    <head><title>Fragment Thymeleaf</title></head>
+    <body>
+        <div  th:fragment="navbar-menuprincipal" >
+            <nav class="navbar navbar-expand-lg navbar-red navbar-dark fixed-top">
+                <div class="wrapper"></div>
+                <div class="container-fluid all-show">
+                    <a class="navbar-brand text-center" th:href="@{/}"><span th:text="${@environment.getProperty('application.title')}"></span>
+                        <p style="font-size: 10px; margin-bottom: 0px;" th:text="${@environment.getProperty('application.version')}" /></a>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/documentacao}"><span th:text="#{home.text.documentacao}"/></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/privacidade}"><span th:text="#{home.text.private}"/></a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/termos}"><span th:text="#{home.text.terms}"/></a>
+                            </li>
+                        </ul>
+                        
+                        <!-- Idiomas, Login e Contato a direita -->
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <!-- 🏳️‍🌈 Seção das bandeirinhas -->
+                            <li class="nav-item d-flex align-items-center ms-3">
+                                <a th:href="@{/?locale=pt_BR}" class="nav-link p-0 mx-1">
+                                    <img th:src="@{/assets/pt_BR.png}" alt="Português" width="38" height="26"/>
+                                </a>&nbsp;&nbsp;
+                                <a th:href="@{/?locale=en_US}" class="nav-link p-0 mx-1">
+                                    <img th:src="@{/assets/en_US.png}" alt="English" width="38" height="26"/>
+                                </a>&nbsp;&nbsp;
+                            </li>
+                            <!-- 🏳️‍🌈 Seção dos Menus Login e Contato  -->
+                            <li class="nav-item">
+                                <a class="nav-link" id="btnContato" href="#"><span th:text="#{home.text.fale-conosco}"/></a>
+                            </li>
+                            <li class="nav-item"  sec:authorize="isAnonymous()">
+                                <a class="nav-link" th:href="@{/login}">Login</a>
+                            </li>
+                            <li class="nav-item"  sec:authorize="isAuthenticated()">
+                                <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </body>
+</html>

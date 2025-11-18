@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>CachaBOT</title>
+</head>
+
+<body th:style="'background-image:url(' + @{/assets/cacha_bg.png} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+    <!-- Full Page Container -->
+    <div id="page-container">
+        <!-- CONTEUDO DA PAGINA  -->
+        <div id="content-wrap">
+            <!--  MENU DO SISTEMA  -->
+            <div th:insert="~{modulos/fragmento-menu-sistema :: navbar-menusistema}"></div>
+            <!--  AREA DO CONTEUDO DINAMICO  -->
+            <div class="d-flex align-items-center">
+                <div class="col" style="margin-top: 4%;">
+                    <!--    Titulo da Secao     -->
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h1 th:text="#{users.list}" class="m-0"></h1>
+                    </div>
+                    <!--    Tabela com os dados da secao     -->
+                    <table class="table table-hover table-borderless table-striped cachaCard">
+                        <thead>
+                            <tr>
+                                <th th:text="#{table.usuario.id}"      style="width: 10%; text-align: center;"></th>
+                                <th th:text="#{table.usuario.name}"    style="width: 30%;"></th>
+                                <th th:text="#{table.usuario.email}"   style="width: 20%;"></th>
+                                <th th:text="#{table.usuario.ativo}"   style="width: 10%;"></th>
+                                <th th:text="#{table.usuario.perfil}"  style="width: 10%;"></th>
+                                <th th:text="#{table.usuario.totalServidores}"  style="width: 10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${usuariosList.empty}">
+                                <td colspan="7" th:text="#{table.usuario.vazio}"></td>
+                            </tr>
+                            <tr th:each="server : ${usuariosList}">
+                                <td style="width: 3%; text-align: center;"><span th:text="${server.entidadeID}"></span></td>
+                                <td><span th:text="${server.nomePessoal}"></span></td>
+                                <td><span th:text="${server.contaEmail}"></span></td>
+                                <td><span th:text="${server.ativo} ? 'ATIVO' : 'DESATIVADO'"></span></td>
+                                <td><span th:text="${server.nivelAcesso}"></span></td>
+                                <td><span th:text="${server.servidores.size}"></span></td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
+            <!--  FIM DO CONTEUDO DINAMICO  -->
+            <!-- ROODAPE DA PAGINA -->
+            <div th:insert="~{modulos/fragmento-footer-blank :: footer-limpo}"></div>
+        </div>
+    </div>
+</body>
+</html>

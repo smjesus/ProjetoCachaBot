@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>CachaBOT</title>
+</head>
+    
+<body id="page-top" >    
+
+        <div th:insert="~{modulos/fragmento-menu-web :: navbar-menuprincipal}"></div>
+        
+        <!-- Header-->
+        <header class="masthead d-flex align-items-center">
+            <div class="container px-4 px-lg-5 text-center" style="padding-top: 300px;">
+                <h1 class="mb-1"><span th:text="${@environment.getProperty('application.title')}"/></h1>
+                <h3 class="mb-5"><em><span th:text="#{application.description}"/></em></h3>
+                <a class="btn btn-primary btn-xl" href="https://discord.com/oauth2/authorize?client_id=1216577496510627910"><span th:text="#{home.text.add-bot}"/></a>
+            </div>
+        </header>
+
+        <!-- Documentation -->
+        <section class="content-section bg-light" id="Documentacao">
+            <div class="container px-4 px-lg-5 text-center">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-10">
+                        <h2><span th:text="#{home.text.doc-title}"/>.</h2>
+                        <p class="lead mb-5">
+                            <span th:text="#{home.text.doc-descr}"/>
+                        </p>
+                        <a class="btn btn-dark btn-xl" th:href="@{/documentacao}"><span th:text="#{home.text.doc-btn}"/></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="content-section bg-primary text-white">
+            <div class="container px-4 px-lg-5 text-center">
+                <h2 class="mb-4"><span th:text="#{pre.footer.company-logo}"/></h2>
+                <a class="btn btn-xl btn-light me-4" href="https://www.aeroceti.com.br" target="_blank"><span th:text="#{pre.footer.company-btn}"/></a>
+            </div>
+        </section>
+
+        <!-- ROODAPE DA PAGINA -->
+        <div th:insert="~{modulos/fragmento-footer-home :: navbar-footer}"></div>
+
+    </body>
+</html>

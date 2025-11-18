@@ -1,0 +1,247 @@
+/**
+ * Projeto:  CachaBot - BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+ */
+package br.com.aeroceti.cachaBot.controladores;
+
+import java.util.UUID;
+import java.util.Locale;
+import java.time.Instant;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import jakarta.validation.Valid;
+import org.springframework.ui.Model;
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import br.com.aeroceti.cachaBot.entidades.Colaborador;
+import br.com.aeroceti.cachaBot.entidades.UsuarioVerificador;
+import br.com.aeroceti.cachaBot.entidades.dto.EmailMessage;
+import br.com.aeroceti.cachaBot.servicos.ColaboradoresService;
+import br.com.aeroceti.cachaBot.servicos.I18nService;
+import br.com.aeroceti.cachaBot.servicos.MailSenderService;
+import br.com.aeroceti.cachaBot.servicos.PermissoesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ * Classe Controller para o objeto Colaborador (usuarios).
+ *
+ * @author Sergio Murilo - smurilo at Gmail.com
+ * @version 1.0
+ */
+@Controller
+@RequestMapping("/usuario/")
+public class ColaboradoresController {
+
+    @Autowired
+    private final I18nService i18svc;
+    @Autowired
+    private final ColaboradoresService usuariosService;
+    @Autowired
+    private final MailSenderService    mailService;
+    @Autowired
+    private final PermissoesService    permissaoService;
+
+    private final Logger logger = LoggerFactory.getLogger(ServidoresController.class);
+
+    public ColaboradoresController(ColaboradoresService usuariosService, MailSenderService mailService, PermissoesService permissaoService, I18nService i18sv) {
+        this.i18svc = i18sv;
+        this.usuariosService = usuariosService;
+        this.mailService = mailService;
+        this.permissaoService = permissaoService;
+    }
+
+    /**
+     * Listagem de TODOS os Usuarios cadastrados no Banco de dados.
+     * Caso desejar ordenar por nome em ordem alfabetica, 
+     * passar o valor TRUE senao FALSE
+     *
+     * @param modelo - Objeto Model para injetar dados na View
+     * @param ordenar - Verdadeiro se desejar ordenar os nomes em ordem alfabetica
+     * @return String Padrao Spring para redirecionar a uma pagina
+     */
+    @RequestMapping("/listar/{ordenar}")
+    public String listagem(Model modelo, @PathVariable boolean ordenar) {
+        logger.info("Servico de Solicitacao para listar todos os usuarios ...");
+        modelo.addAttribute("usuariosList",usuariosService.listar(ordenar));
+        return"/dashboard/usuarios-list";
+    }
+
+    /**
+     * Listagem PAGINADA de TODOS os Usuarios cadastrados no Banco de dados.
+     *
+     * @param page     -  numero da pagina solicitada
+     * @param pageSize -  total de itens para apresentar na pagina
+     * @return String Padrao Spring para redirecionar a uma pagina
+     */
+    @RequestMapping("/paginar/{page}/{pageSize}")
+    public ModelAndView listar( @PathVariable int page, @PathVariable int pageSize ) {
+        logger.info("Servico de Solicitacao para listar os usuarios PAGINADOS ...");
+        ModelAndView mv = new ModelAndView("/dashboard/usuarios");
+        mv.addObject("usuariosList", usuariosService.paginar(page, pageSize));
+        return mv;
+    }   
+    
+    
+    @GetMapping("/uuid/{token}")
+    public String ativarContaByUUID(@PathVariable UUID token, Model model, Locale locale) {
+        logger.info("Requisição para ativar uma conta com o UUID: {}", token);
+        model.addAttribute("errorPage1", i18svc.buscarMensagem("login.ativar.falhou", locale));
+        model.addAttribute("errorOrigem", "Public");
+        Optional<UsuarioVerificador> solicitado = usuariosService.buscarVerificadorByUUID(token);
+        if( solicitado.isPresent() ) {
+            UsuarioVerificador verificador = solicitado.get();
+            if( verificador.getValidade().compareTo(Instant.now()) < 0 ) {
+                // EXPIROU O TOKEN:
+                logger.info("Ativacao da Conta - FALHOU!! - Token expirado");
+                model.addAttribute("errorType", "NOTFOUND");
+            } else {
+                // TOKEN VALIDO
+                Colaborador usuario = usuariosService.buscar( verificador.getUsuario().getEntidadeID() ).get();
+                usuario.setAtivo(true);
+                usuariosService.salvarColaborador(usuario);
+                model.addAttribute("errorType", "SUCESSO");
+                model.addAttribute("errorOrigem", "Dashboard");
+                model.addAttribute("errorPage1", i18svc.buscarMensagem("login.ativar.conta.1", locale));
+                model.addAttribute("errorPage2", i18svc.buscarMensagem("login.ativar.conta.2", locale));
+                logger.info("Ativacao da Conta {} - Realizada com Sucesso!", usuario.getContaEmail());
+            }
+            usuariosService.deletarVerificador(verificador);
+        } else {
+            logger.info("Ativacao da Conta - FALHOU!! - TOKEN nao encontrado");
+            model.addAttribute("errorType", "NOTFOUND");
+        }
+        return "error";
+    }
+
+    @GetMapping("/ativar/{id}")
+    public String ativarConta(@PathVariable("id") long id, Model modelView, HttpServletRequest request){
+        logger.info("Servico de Ativacao de Contas ...");
+        String baseUrl = request.getRequestURL().toString()
+            .replace(request.getRequestURI(), request.getContextPath());
+
+        Optional<Colaborador> userSolicitado = usuariosService.buscar(id);
+        if( userSolicitado.isPresent() ) {
+            logger.info("Encontrou Colaborador com nome: " + userSolicitado.get().getNomePessoal());
+           
+            // cria ou atualiza o token para validar a senha:
+            UsuarioVerificador verificador;
+            Optional<UsuarioVerificador> userVerificador = usuariosService.buscarVerificador(userSolicitado.get().getEntidadeID());
+            if( userVerificador.isPresent() ) {
+                logger.info("Encontrou um Token, validando por mais 25 minutos... " );
+                verificador = userVerificador.get();
+            } else {
+                logger.info("Criando um novo Token para o usuario ... " );
+                verificador = new UsuarioVerificador();
+                verificador.setVerificadorID(null);
+            }
+            verificador.setUsuario(userSolicitado.get());
+            verificador.setCodigoUUID(UUID.randomUUID());
+            verificador.setValidade(Instant.now().plusMillis(1500000));
+            usuariosService.atualizarVerificador(verificador);
+            
+            try{ 
+                EmailMessage mensagem = new EmailMessage(userSolicitado.get().getContaEmail(), null, userSolicitado.get().getNomePessoal(), "Ativação de Conta no CachaBOT", "");
+                logger.info("Enviando email para ativacao da conta... " );
+                mailService.sendTemplateEmail(mensagem, "dashboard/email/ativarConta", modelView, baseUrl, verificador.getCodigoUUID().toString().trim());
+            } catch(MessagingException ex) {
+                logger.info("Encontrou no envio do email: " + ex.getMessage());
+            }
+        } else {
+            logger.info("Processando requisicao: ALTERÇÃO NÃO REALIZADA - Referencia Invalida! ");
+        }
+        return "redirect:/usuario/paginar/1/10";
+
+    }
+    
+    @GetMapping("/desativar/{id}")
+    public String desativarConta(@PathVariable("id") long id){
+        logger.info("Servico de DESATIVACAO do Status de uma Conta ...");
+        Optional<Colaborador> userSolicitado = usuariosService.buscar(id);
+        if( userSolicitado.isPresent() ) {
+            userSolicitado.get().setAtivo(false);
+            usuariosService.salvarColaborador(userSolicitado.get());
+        }        
+         return "redirect:/usuario/paginar/1/10";
+    }
+    
+    /**
+     * Apresenta o formulario para atualizar um Colaborador na base de dados.
+     * 
+     * @param id - ID do objeto a ser atualizado
+     * @param modelo - objeto de manipulacao da view pelo Spring
+     * @return String Padrao Spring para redirecionar a uma pagina
+     */
+    @GetMapping("/atualizar/{id}")
+    @PreAuthorize("hasAuthority('Administrador') or (hasAuthority('Gerente') and #id == principal.id)")
+    public String atualizar( @PathVariable("id") long id, Model modelo ) {
+        Colaborador usuario;
+        logger.info("Recebida requisicao para editar um Colaborador...");
+        Optional<Colaborador> userSolicitado = usuariosService.buscar(id);
+        if( userSolicitado.isPresent() ) {
+            usuario = userSolicitado.get();
+            modelo.addAttribute("colaborador", usuario);
+        } else {
+            logger.info("Requisicao recebida: ALTERÇÃO NÃO REALIZADA - Referencia Invalida! ");
+            return "redirect:/usuario/paginar/1/10";
+        }
+        modelo.addAttribute("permissoesList",permissaoService.listar(true));
+        logger.info("APRESENTANDO Formulário de Edição para alteracao de " + usuario.getNomePessoal());
+        return "/dashboard/usuario/editar"; 
+    }
+    
+    /**
+     * Atualiza as informacoes de um Colaborador da base de dados
+     * 
+     * @param result  - Objeto com o Result da Requisicao HTTP
+     * @param colaborador - objeto a ser persistido 
+     * @param modelo  - objeto de manipulacao da view pelo Spring
+     * @return String - Padrao Spring para redirecionar a uma pagina
+     */
+    @PostMapping("/atualizar")
+    @PreAuthorize("hasAuthority('Administrador') or (hasAuthority('Gerente') and #colaborador.entidadeID == principal.id)")
+    public String atualizar( @Valid @ModelAttribute Colaborador colaborador, BindingResult result, Model modelo ) {
+        if (result.hasErrors()) {
+            modelo.addAttribute("usuario", colaborador);
+            modelo.addAttribute("permissoesList",permissaoService.listar(true));
+            return "/dashboard/usuario/editar";
+        }
+        logger.info("Requisicao recebida: ATUALIZANDO  os dados do " + colaborador.getNomePessoal());
+        usuariosService.atualizar(colaborador);
+        return "redirect:/usuario/paginar/1/10";
+    }
+    
+    /**
+     * Deleta um Colaborador da Base de Dados do sistema.
+     * 
+     * @param id     - ID do usuario na base de dados para deletar
+     * @param modelo - Model para encaminhar a View
+     * @return       - Redireciona para a Listagem Paginada dos Usuarios
+     */
+    @GetMapping("/excluir/{id}")
+    @PreAuthorize("hasAuthority('Administrador') or (hasAuthority('Gerente') and #id == principal.id)")
+    public String excluirColaborador( @PathVariable("id") long id, Model modelo) {
+        logger.info("Requisicao recebida: EXCLUIR USUARIO: " + id);
+        Optional<Colaborador> userSolicitado = usuariosService.buscar(id);
+        if( userSolicitado.isPresent() ) {
+            logger.info("Encontrou Colaborador com nome: " + userSolicitado.get().getNomePessoal());
+            usuariosService.remover(userSolicitado.get());
+        } else {
+            logger.info("Processando requisicao: ALTERÇÃO NÃO REALIZADA - Referencia Invalida! ");
+        }
+        return "redirect:/usuario/paginar/1/10";
+    }
+    
+}
+/*                    End of Class                                            */

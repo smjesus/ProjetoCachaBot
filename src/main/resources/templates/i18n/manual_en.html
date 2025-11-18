@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>CachaBOT</title>
+</head>
+    
+<body id="page-top">
+
+    <div th:insert="~{modulos/fragmento-menu-web :: navbar-menuprincipal}"></div>
+    
+    <!-- Header-->
+    <header class="masthead d-flex align-items-center">
+        <div class="container px-4 px-lg-5 text-center">
+            <h1 class="mb-1">CachaBOT</h1>
+            <h3 class="mb-5"><em><span th:text="#{home.text.documentacao-h1}"/></em></h3>
+        </div>
+    </header>
+
+    <!-- OBJECTIVES -->
+    <section class="content-section bg-light" id="about">
+        <div class="container px-4 px-lg-5 text-center">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-10">
+                    <h2>Objectives and Functions of CachaBOT</h2>
+                    <p class="lead mb-5">
+                        CachaBOT aims to automate the following tasks:
+                    </p>
+                    <div style="text-align: left; font-weight: normal;">
+                        <ul>
+                            <li>Assign a <b>"Temporary Role"</b> to users when they join the server.</li><br>
+
+                            <li>Perform a <b>Verification</b> of new users.<br>
+                                In the "Welcome" channel defined by the server administrator,
+                                a welcome message and a button will appear for the user to confirm 
+                                their participation in the community.<br>
+                                After the user’s confirmation, CachaBOT removes the temporary role 
+                                and assigns the “Definitive Role.”<br>
+                                These roles are defined by the administrator using slash commands.
+                            </li><br>
+
+                            <li>Define the <b>Welcome Message</b> and the channel where it will be displayed.<br>
+                                Through slash commands, the administrator can configure the welcome message 
+                                and specify the channel where it will appear (see slash commands in the next section).
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MANUAL -->
+    <section class="content-section bg-dark text-white">
+        <div class="container px-4 px-lg-5 text-center">
+            <div class="col-sm-1 col-lg-1">&nbsp;</div>
+            <div class="panel panel-success text-center col-sm-10 col-lg-10">
+
+                <div class="panel-heading">
+                    <h3>Initial Procedures to Activate CachaBOT</h3><br>
+                </div>
+                <div class="panel-body"> 
+                    <table class="table" style="color: #ffffff">
+                        <tbody style="text-align: left;">
+                            <tr><td>
+                                The first step is to install CachaBOT on your server by clicking the “Add to Server” button on the main page.
+                            </td></tr>
+                            <tr><td>
+                                The second step is to assign CachaBOT a role higher than both the “temporary” and “definitive” roles;
+                                otherwise, the bot will not be able to assign roles to users.
+                            </td></tr>
+                            <tr><td>
+                                Finally, configure the proper permissions in the channels where CachaBOT will operate
+                                (send messages, clear chats, display embedded messages, etc).<br><br>
+                                Don’t forget to <u>register your email</u> using the <b>/donoservidor</b> command,
+                                and keep your server name updated if you change it.
+                            </td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-heading"><br><br><br><h3>Commands Related to Roles</h3><br></div>
+                <div class="panel-body">
+                    <table class="table" style="color: #ffffff">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Command</th>
+                                <th>Function</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align: left;">
+                            <tr><td>/ajuda</td><td>Displays help information about the Bot Manager.</td></tr>
+                            <tr><td>/listarcargos</td><td>Lists all roles registered on the server.</td></tr>
+                            <tr><td>/cargoprovisorio</td><td>Defines the default role that every user receives temporarily upon joining the server.<br>The ROLE must be provided by its <b>ID</b>.</td></tr>
+                            <tr><td>/cargodefinitivo</td><td>Defines the definitive role that users receive after being verified.<br>The ROLE must be provided by its <b>ID</b>.</td></tr>
+                            <tr><td>/cargosuporte</td><td>Defines the Technical Support role for users who can configure CachaBOT on the server.<br>The ROLE must be provided by its <b>ID</b>.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-heading"><br><br><br><h3>Commands Related to Welcome Messages</h3><br></div>
+                <div class="panel-body"> 
+                    <table class="table" style="color: #ffffff">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Command</th>
+                                <th>Function</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align: left;">
+                            <tr><td>/salaboasvindas</td><td>Defines the initial channel every user can access (Welcome).<br>The CHANNEL must be provided by its <b>ID</b>.</td></tr>
+                            <tr><td>/msgtitulo</td><td>Defines the TITLE of the Welcome Message.</td></tr>
+                            <tr><td>/msgcorpo</td><td>Defines the BODY content of the Welcome Message.<br><a href="#conteudo-mensagem" style="color:#fff;">See how to define content below!</a></td></tr>
+                            <tr><td>/msgcor</td><td>Defines the COLOR of the sidebar in the Welcome Message.<br>Accepted colors: GREEN, YELLOW, BLUE, ORANGE, and WHITE (use uppercase).<br>The DEFAULT color is <b>WHITE</b>.</td></tr>
+                            <tr><td>/msglinha</td><td>Defines the URL of an image (bar or line) displayed at the end of the Welcome Message.</td></tr>
+                            <tr><td>/msgicone</td><td>Defines the URL of an image to be used as the ICON of the Welcome Message.</td></tr>
+                            <tr><td>/boasvindas</td><td>Displays the Welcome Message in the verification channel.</td></tr>
+                            <tr><td>/msgparticipacao</td><td>Defines the message users will receive after clicking “Participar” (Join) in the Welcome Message.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-heading"><br><br><br><h3>General Purpose Commands</h3><br></div>
+                <div class="panel-body">
+                    <table class="table" style="color: #ffffff">
+                        <thead><tr class="text-center"><th>Command</th><th>Function</th></tr></thead>
+                        <tbody style="text-align: left;">
+                            <tr><td>/clear</td><td>Clears all messages posted in a channel.<br>The user must have Manage Messages permission to execute this command.</td></tr>
+                            <tr><td>/config</td><td>Displays all server configurations for verification.<br>Only users with the Technical Support Role can view configurations.</td></tr>
+                            <tr><td>/nomeservidor</td><td>Updates the <b>Server Name</b> in the database if the owner has changed it.<br>Any user can run this command, but the server name is obtained directly from the server.</td></tr>
+                            <tr><td>/donoservidor</td><td>Registers the server owner's name and email in the database.<br>Only the owner can execute this command.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-heading"><br><br><h3>Example of a Configured Welcome Message:</h3><br></div>
+                <div class="panel-body"><img th:src="@{/assets/msg_embed.webp}" /></div>
+                
+                <div class="panel-heading"><br><br><br><h3 id="conteudo-mensagem">How to Create Your Welcome Message</h3><br></div>
+                <div class="panel-body"> 
+                    <table class="table" style="color:#fff;">
+                        <tbody style="text-align:left;">
+                            <tr><td>CachaBOT formats your welcome message through a slash command! Since this method is limited in formatting, we’ve created a small formatting code:</td></tr>
+                            <tr><td>- To create a line break, use the character ‘|’ twice with no space.<br>- Discord formatting codes can also be used.<br></td></tr>
+                            <tr><td>So, if you type the following in the command prompt:</td></tr>
+                            <tr><td># Welcome to our Community! || || This space is intended for client interaction and sharing relevant information about each provided service. Our goal is to keep all important details in a single place, easily accessible by both clients and service providers. || || This tool also provides: ||* online assistance||* technical support via chat, voice, and video||* online meetings|| ||We hope this helps improve efficiency and client satisfaction.|| ||*You can always count on us*! </td></tr>
+                            <tr><td>You’ll get a result like the example image above.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-heading"><h3>Procedures to REMOVE CachaBOT</h3><br></div>
+                <div class="panel-body"> 
+                    <table class="table" style="color:#fff;">
+                        <tbody style="text-align:left;">
+                            <tr><td>If you decide to stop using CachaBOT on your server, follow these steps:</td></tr>
+                            <tr><td>First, in Discord, remove CachaBOT from your server by right-clicking on it and selecting “Kick CachaBOT.” Provide a reason if desired and confirm.</td></tr>
+                            <tr><td>If you have access to CachaBOT’s Administrative Panel, log in with your account and first delete your server from the Server List. Then, if desired, delete your user from the User List. You can now log out — the process is complete.</td></tr>
+                            <tr><td>If you <b>DO NOT</b> have access to the Administrative Panel, simply send us a message through the “Contact Us” menu, providing your server name, the email you registered with the <b>/donoservidor</b> command, and your Discord username. We will promptly remove all your data from the system.</td></tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </div>                    
+            <div class="col-sm-1 col-lg-1">&nbsp;</div>
+        </div>
+    </section>
+    
+    <!-- COMMON PRE-FOOTER -->
+    <div th:insert="~{modulos/fragmento-links-web :: pre-footer}"></div>
+            
+    <!-- PAGE FOOTER -->
+    <div th:insert="~{modulos/fragmento-footer-home :: navbar-footer}"></div>
+    
+</body>
+</html>

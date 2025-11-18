@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- 
+ * Projeto:  CachaBot  -  BOT para o Discord para gerenciar Usuarios.
+ * Gerente:  Sergio Murilo  -  smurilo at GMail
+ * Data:     Manaus/AM  -  2024
+ * Equipe:   Murilo, Victor, Allan
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{modulos/fragmento-header :: header-section}">
+    <title>CachaBOT</title>
+</head>
+    
+<body th:style="'background-image:url(' + @{/assets/cacha_bg.png} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+    <!-- Full Page Device -->
+    <div id="page-container">
+        <!-- CONTEUDO DA PAGINA  -->
+        <div id="content-wrap">
+            <!--  MENU DO SISTEMA  -->
+
+            <!--  AREA DO CONTEUDO DINAMICO  -->
+            <section class="d-flex align-items-center justify-content-center vh-100 text-center">
+                <div class="w-60">
+                    <div class="mb-5  cachaCard">
+                        <span th:if="${errorType == 'SUCESSO'}">
+                              <i class="fa-solid fa-check fa-beat fa-xl" style="color: #1a5fb4;"></i>
+                        </span>
+                        <span th:if="${errorType == 'NOTFOUND'}">
+                              <i class="fa-solid fa-triangle-exclamation fa-beat fa-xl" style="color: #1a5fb4;"></i>
+                        </span>
+                        <h2><span th:text="${errorPage1}"></span></h2>
+                        <h5><span th:text="${errorPage2}"></span></h5>
+                    </div>
+                    <!-- Mostra este link se errorOrigem == "Dashboard" -->
+                    <a class="btn btn-primary btn-xl" th:if="${errorOrigem == 'Dashboard'}" th:href="@{/dashboard}"><span th:text="#{pre.footer.go-home-btn}"/></a>
+
+                    <!-- Mostra este link se errorOrigem == 'publico' -->
+                    <a class="btn btn-primary btn-xl" th:if="${errorOrigem == 'Public'}" th:href="@{/}"><span th:text="#{pre.footer.go-home-btn}"/></a>
+                </div>
+            </section>
+            <!--  FIM DO CONTEUDO DINAMICO  -->
+            
+            <!-- ROODAPE DA PAGINA -->
+            <div th:insert="~{modulos/fragmento-footer-blank :: footer-limpo}"></div>
+        </div>
+    </div>
+</body>
+</html>
