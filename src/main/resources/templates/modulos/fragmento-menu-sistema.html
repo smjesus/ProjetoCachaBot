@@ -54,8 +54,6 @@
                             <span th:text="${#authentication.getPrincipal().getNomeUsuario()}" style="font-size: 0.9rem;"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="navbarUserDropdown">
-<!--                            <li sec:authorize="!hasAuthority('Administrador')"><a class="dropdown-item" th:href="@{/perfil}">Perfil</a></li>  
-                            <li sec:authorize="!hasAuthority('Administrador')"><hr class="dropdown-divider"/></li>-->
                             <li>
                                 <form method="post" th:action="@{/logout}">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

@@ -21,21 +21,17 @@
                 <div class="col" style="margin-top: 4%;">
                     <!--    Titulo da Secao     -->
                     <div class="d-flex text-center align-items-center justify-content-center">
-                        <h1 th:text="#{servidor.list}" class="m-0"></h1>
+                        <h1 th:text="#{permissao.list}" class="m-0"></h1>
                     </div>
                     <!--    Tabela com os dados da secao     -->
                     <table class="table table-striped bg-light rounded shadow-sm">
                         <tbody>
-                            <tr th:if="${servidor.empty}">
-                                <td colspan="6" th:text="#{table.servidor.vazio}"></td>
+                            <tr th:if="${permissao.empty}" class="text-center">
+                                <td colspan="2" th:text="#{table.permissao.vazio}"></td>
                             </tr>
-                            <tr th:each="server : ${servidor}">
-                                <td  style="width: 3%; text-align: center;"><span th:text="${server.servidorID}"></span></td>
-                                <td><span th:text="${server.nome}"></span></td>
-                                <td><span th:text="${server.colaborador?.nomePessoal ?: 'Não informado'}"></span></td>
-                                <td><span th:text="${server.salaBoasVindas}"></span></td>
-                                <td><span th:text="${server.ativo} ? 'ATIVO' : 'DESATIVADO'"></span></td>
-                                <td><span th:text="${server.cadastro} ? 'ATIVO' : 'DESATIVADO'"></span></td>
+                            <tr th:each="nivel : ${permissao}">
+                                <td  style="text-align: center;"><span th:text="${nivel.entidadeID}"></span></td>
+                                <td  style="width: 85%;"        ><span th:text="${nivel.nome}"></span></td>
                             </tr>
                         </tbody>
                     </table>    

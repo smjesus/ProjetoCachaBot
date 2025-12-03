@@ -16,9 +16,9 @@
     
     <name>Projeto CachaBot</name>
     <description>Bot do Discord para gerenciar Participantes.
-Sistema em Spring Boot 3.30, Spring Security 6, JDA 5 e interface Web utilizando Bootstrap e Thymeleaf.
-O Sistema conta com diversas funcionalidades para gestão de servidores no Discord, descritas no Manual disponível no frontend (WEB) da aplicação.
-</description>
+        Sistema em Spring Boot 3.30, Spring Security 6, JDA 5 e interface Web utilizando Bootstrap e Thymeleaf.
+        O Sistema conta com diversas funcionalidades para gestão de servidores no Discord, descritas no Manual disponível no frontend (WEB) da aplicação.
+    </description>
     <properties>
         <java.version>21</java.version>
         <springdoc.version>2.8.11</springdoc.version>

@@ -38,7 +38,8 @@ public class WebErrorController implements ErrorController {
     @GetMapping("/error")
     public ModelAndView handleError (HttpServletRequest request, Model model, Locale locale) {
         List<String> rotas = Arrays.asList("/usuario", "/servidor", "/dashboard");
-        var mensagem = i18svc.buscarMensagem("error.all.page", locale);
+        var mensagem1 = i18svc.buscarMensagem("error.all.page.1", locale);
+        var mensagem2 = i18svc.buscarMensagem("error.all.page.2", locale);
 
         Object httpStatus = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         Object uri = request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);
@@ -48,22 +49,26 @@ public class WebErrorController implements ErrorController {
             // Erros de acesso negado:
             if( code == 403 ) {
                 logger.info("Configurando mensagem 403 ...");
-                mensagem = i18svc.buscarMensagem("error.403.page", locale);
+                mensagem1 = i18svc.buscarMensagem("error.403.page.1", locale);
+                mensagem2 = i18svc.buscarMensagem("error.403.page.2", locale);
             }
             // Erros de solicitacao invalida:
             if( (code >399 && code < 499) && (code != 403) ) {
                 logger.info("Configurando mensagem de Solicitacao Invalida ...");
-                mensagem = i18svc.buscarMensagem("error.400.page", locale);
+                mensagem1 = i18svc.buscarMensagem("error.400.page.1", locale);
+                mensagem2 = i18svc.buscarMensagem("error.400.page.2", locale);
             }
             // Erros de processamento:
             if( code >499 && code < 599){
                 logger.info("Configurando mensagem Erro Interno ...");
-                mensagem = i18svc.buscarMensagem("error.500.page", locale);
+                mensagem1 = i18svc.buscarMensagem("error.500.page.1", locale);
+                mensagem2 = i18svc.buscarMensagem("error.500.page.2", locale);
             }
         }
-        model.addAttribute("errorPage1", mensagem);
-        mensagem = rotas.stream().anyMatch(uri.toString()::contains) ? "Dashboard" : "Public";
-        model.addAttribute("errorOrigem", mensagem);
+        model.addAttribute("errorPage1", mensagem1);
+        model.addAttribute("errorPage2", mensagem2);
+        mensagem1 = rotas.stream().anyMatch(uri.toString()::contains) ? "Dashboard" : "Public";
+        model.addAttribute("errorOrigem", mensagem1);
                 
         logger.info("Encaminhando para nova pagina de erro ...");
         return new ModelAndView("error");

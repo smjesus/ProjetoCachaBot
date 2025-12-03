@@ -18,7 +18,7 @@ import net.dv8tion.jda.api.entities.Message;
 import br.com.aeroceti.cachaBot.entidades.Servidor;
 import br.com.aeroceti.cachaBot.entidades.Colaborador;
 import br.com.aeroceti.cachaBot.entidades.UsuarioVerificador;
-import br.com.aeroceti.cachaBot.entidades.dto.EmailMessage;
+import br.com.aeroceti.cachaBot.entidades.dto.EmailMessageDTO;
 import br.com.aeroceti.cachaBot.repositorios.ServidoresRepository;
 import br.com.aeroceti.cachaBot.servicos.ColaboradoresService;
 import br.com.aeroceti.cachaBot.servicos.I18nService;
@@ -28,6 +28,8 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 //import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -122,66 +124,81 @@ public class MensagemEmbebed {
      */
     @Transactional
     public void donoServidor(SlashCommandInteractionEvent event, Servidor server) {
-        String contaEmail = event.getOption("email-do-usuario", OptionMapping::getAsString);
-        Member member = event.getMember();
-        Servidor serverDiscord = (Servidor) serverDatabse.findByEntidadeID(server.getEntidadeID()).get();
-        Colaborador owner;
-        if( isOwner( event.getGuild(), member ) ) {
-            if( serverDiscord.getColaborador() != null ) {
-                logger.info("Atualizando o dono do servidor ja cadastrado ..." );
-                owner = (Colaborador) serverDiscord.getColaborador();
-            } else {
-                logger.info("Criando um novo dono na Base de Dados ..." );
-                owner = new Colaborador(); owner.setEntidadeID(null);
-                owner.setCodigoAcesso("Cach4B0t&");
-                owner.setConfirmarSenha("Cach4B0t&");
-            }
-            owner.setAtivo(false);
-            owner.setNomePessoal( member.getEffectiveName());
-            owner.setContaEmail(contaEmail);
-            // salva o dono do servidor
-            usersService.atualizar(owner); 
-            // cria o token para validar a senha:
-            UsuarioVerificador verificador;
-            Optional<UsuarioVerificador> userVerificador = usersService.buscarVerificador(owner.getEntidadeID());
-            if( userVerificador.isPresent() ) {
-                logger.info("Encontrou um Token, validando por mais 25 minutos... " );
-                verificador = userVerificador.get();
-            } else {
-                logger.info("Criando um novo Token para o usuario ... " );
-                verificador = new UsuarioVerificador();
-                verificador.setVerificadorID(null);
-            }
-            verificador.setUsuario(owner);
-            verificador.setCodigoUUID(UUID.randomUUID());
-            verificador.setValidade(Instant.now().plusMillis(1500000));
-            usersService.atualizarVerificador(verificador);
-            // prepara o e-mail para ativar a conta:
-            String corpoMensagem = "<html><head><title>Ativação de Conta no CachaBOT</title></head><body><BR>".concat("<img width='10%' src='").concat(baseUrl)
-                                   .concat("/assets/cacha_logo.png' alt='CACHABOT'/><br>").concat("<h2>Olá ").concat( owner.getNomePessoal() ).trim().concat("!</h2><BR>");
-            corpoMensagem = corpoMensagem.concat("<p>Para ativar sua conta, clique no link abaixo: ")
-                                         .concat("<BR><a href='").concat(baseUrl).concat("/usuario/uuid/").concat(verificador.getCodigoUUID().toString()).concat("' target='_blank'>Clique aqui</a><BR>").concat("</p>")
-                                         .concat("<HR><h5><i>Mensagem automatica do CachaBOT - Não responder.</i></h5>")
-                                         .concat("</body></html>");
-            EmailMessage mensagem = new EmailMessage(owner.getContaEmail(), null, owner.getNomePessoal(), "Ativação de Conta no CachaBOT", corpoMensagem);
-            // Atualiza o Servidor
-            serverDiscord.setColaborador(owner);
-            serverDatabse.save(serverDiscord);
-            // Envia o email numa thread:
-            event.deferReply(true).queue();
-            CompletableFuture.runAsync(() -> {
-                try{ 
-                    logger.info("Enviando email para ativacao da conta... " );
-                    mailService.sendHtmlEmail(mensagem);
-                } catch(MessagingException ex) {
-                    logger.info("Encontrou no envio do email: " + ex.getMessage());
-                }                
-            });
-            logger.info("Colaborador atualizado na Base de Dados!" );
-            event.getHook().sendMessage( serverDiscord.getColaborador().getNomePessoal() + " está como dono do Servidor (" + serverDiscord.getNome() + ") na Base de Dados! Para validar a conta veja no email informado.").setEphemeral(true).queue();
+        // Valida a senha fornecida:
+        String REGEX_SENHA_FORTE = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9\\s]).{8,}$";
+        String novaSenha = event.getOption("senha-do-usuario", OptionMapping::getAsString);
+        if( novaSenha.isBlank() || novaSenha.isEmpty() || novaSenha == null ) {
+            logger.info("Erro no Processamento:  Senha em branco ou nula." );
+            event.reply("Ops!! precisa fornecer uma senha pra sua conta que será criada!!!").setEphemeral(true).queue();
         } else {
-            logger.info("Usuario(" + event.getMember().getEffectiveName() +") não tem permissão para modificar o Dono do Servidor!" );
-            event.reply("Você não tem permissão para usar este comando.").setEphemeral(true).queue();
+            Pattern pattern = Pattern.compile(REGEX_SENHA_FORTE);
+            Matcher matcher = pattern.matcher(novaSenha);
+            if( matcher.matches() ) {
+                String contaEmail = event.getOption("email-do-usuario", OptionMapping::getAsString);
+                Member member = event.getMember();
+                Servidor serverDiscord = (Servidor) serverDatabse.findByEntidadeID(server.getEntidadeID()).get();
+                Colaborador owner;
+                if( isOwner( event.getGuild(), member ) ) {
+                    if( serverDiscord.getColaborador() != null ) {
+                        logger.info("Atualizando o dono do servidor ja cadastrado ..." );
+                        owner = (Colaborador) serverDiscord.getColaborador();
+                    } else {
+                        logger.info("Criando um novo dono na Base de Dados ..." );
+                        owner = new Colaborador(); owner.setEntidadeID(null);
+                    }
+                    owner.setAtivo(false);
+                    owner.setNomePessoal(member.getEffectiveName());
+                    owner.setContaEmail(contaEmail);
+                    owner.setCodigoAcesso(novaSenha.trim());
+                    owner.setConfirmarSenha(novaSenha.trim());
+                    // salva o dono do servidor
+                    usersService.atualizar(owner); 
+                    // cria o token para validar a conta:
+                    UsuarioVerificador verificador;
+                    Optional<UsuarioVerificador> userVerificador = usersService.buscarVerificador(owner.getEntidadeID());
+                    if( userVerificador.isPresent() ) {
+                        logger.info("Encontrou um Token, validando por mais 25 minutos... " );
+                        verificador = userVerificador.get();
+                    } else {
+                        logger.info("Criando um novo Token para o usuario ... " );
+                        verificador = new UsuarioVerificador();
+                        verificador.setVerificadorID(null);
+                    }
+                    verificador.setUsuario(owner);
+                    verificador.setCodigoUUID(UUID.randomUUID());
+                    verificador.setValidade(Instant.now().plusMillis(1500000));
+                    usersService.atualizarVerificador(verificador);
+                    // prepara o e-mail para ativar a conta:
+                    String corpoMensagem = "<html><head><title>Ativação de Conta no CachaBOT</title></head><body><BR>".concat("<img width='10%' src='").concat(baseUrl)
+                                           .concat("/assets/cacha_logo.png' alt='CACHABOT'/><br>").concat("<h2>Olá ").concat( owner.getNomePessoal() ).trim().concat("!</h2><BR>");
+                    corpoMensagem = corpoMensagem.concat("<p>Para ativar sua conta, clique no link abaixo: ")
+                                                 .concat("<BR><a href='").concat(baseUrl).concat("/usuario/uuid/").concat(verificador.getCodigoUUID().toString()).concat("' target='_blank'>Clique aqui</a><BR>").concat("</p>")
+                                                 .concat("<HR><h5><i>Mensagem automatica do CachaBOT - Não responder.</i></h5>")
+                                                 .concat("</body></html>");
+                    EmailMessageDTO mensagem = new EmailMessageDTO(owner.getContaEmail(), null, owner.getNomePessoal(), "Ativação de Conta no CachaBOT", corpoMensagem);
+                    // Atualiza o Servidor
+                    serverDiscord.setColaborador(owner);
+                    serverDatabse.save(serverDiscord);
+                    // Envia o email numa thread:
+                    event.deferReply(true).queue();
+                    CompletableFuture.runAsync(() -> {
+                        try{ 
+                            mailService.sendHtmlEmail(mensagem);
+                            logger.info("Enviado email para ativacao da conta! Atualizacao concuída. " );
+                        } catch(MessagingException ex) {
+                            logger.info("Encontrou no envio do email: " + ex.getMessage());
+                        }                
+                    });
+                    logger.info("Colaborador atualizado na Base de Dados!" );
+                    event.getHook().sendMessage( serverDiscord.getColaborador().getNomePessoal() + " está como dono do Servidor (" + serverDiscord.getNome() + ") na Base de Dados! Para validar a conta veja no email informado.").setEphemeral(true).queue();
+                } else {
+                    logger.info("Usuario(" + event.getMember().getEffectiveName() +") não tem permissão para modificar o Dono do Servidor!" );
+                    event.reply("Você não tem permissão para usar este comando.").setEphemeral(true).queue();
+                }
+            } else {
+                logger.info("Erro no processamento:  Senha não atende os requisitos de segurança!" );
+                event.reply("Ops!! Senha inválida, deve conter no mínimo uma maiuscula, uma minuscula, um número e um simbolo, além de no mínimo 8 caracteres!!!").setEphemeral(true).queue();
+            }
         }
     }
 

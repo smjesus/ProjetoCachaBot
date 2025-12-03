@@ -10,35 +10,24 @@
     <title>CachaBOT</title>
 </head>
 
-<body th:style="'background-image:url(' + @{/assets/cacha_bg.png} + '); background-repeat: no-repeat, repeat; background-size: cover;'">    
+<body>    
     <!-- Full Page Container -->
     <div id="page-container">
         <!-- CONTEUDO DA PAGINA  -->
         <div id="content-wrap">
-            <!--  MENU DO SISTEMA  -->
-            <div th:insert="~{modulos/fragmento-menu-sistema :: navbar-menusistema}"></div>
+
             <!--  AREA DO CONTEUDO DINAMICO  -->
             <div class="d-flex align-items-center">
                 <div class="col" style="margin-top: 4%;">
                     <!--    Titulo da Secao     -->
-                    <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex text-center align-items-center justify-content-center">
                         <h1 th:text="#{users.list}" class="m-0"></h1>
                     </div>
                     <!--    Tabela com os dados da secao     -->
-                    <table class="table table-hover table-borderless table-striped cachaCard">
-                        <thead>
-                            <tr>
-                                <th th:text="#{table.usuario.id}"      style="width: 10%; text-align: center;"></th>
-                                <th th:text="#{table.usuario.name}"    style="width: 30%;"></th>
-                                <th th:text="#{table.usuario.email}"   style="width: 20%;"></th>
-                                <th th:text="#{table.usuario.ativo}"   style="width: 10%;"></th>
-                                <th th:text="#{table.usuario.perfil}"  style="width: 10%;"></th>
-                                <th th:text="#{table.usuario.totalServidores}"  style="width: 10%;"></th>
-                            </tr>
-                        </thead>
+                    <table class="table table-striped bg-light rounded shadow-sm">
                         <tbody>
                             <tr th:if="${usuariosList.empty}">
-                                <td colspan="7" th:text="#{table.usuario.vazio}"></td>
+                                <td colspan="6" th:text="#{table.usuario.vazio}"></td>
                             </tr>
                             <tr th:each="server : ${usuariosList}">
                                 <td style="width: 3%; text-align: center;"><span th:text="${server.entidadeID}"></span></td>
@@ -54,7 +43,7 @@
             </div>
             <!--  FIM DO CONTEUDO DINAMICO  -->
             <!-- ROODAPE DA PAGINA -->
-            <div th:insert="~{modulos/fragmento-footer-blank :: footer-limpo}"></div>
+            <div th:insert="~{modulos/fragmento-footer-clean :: footer-clean}"></div>
         </div>
     </div>
 </body>

@@ -23,16 +23,16 @@
                     <!--    Titulo da Secao     -->
                     <div class="d-flex align-items-center justify-content-between" style="padding-left: 2%;padding-right: 2%;">
                         <h1 th:text="#{permissao.list}" class="m-0"></h1>
-                        <!-- Ícone de Impressão -->
                         <div>
-                            <a class="btn-alink"
-                                th:href="@{/usuario/listar/{ordenar}(ordenar=true)}"
+                            <!-- Ícone de Impressão -->
+                            <a class="btn-alink mx-2" target="_blank"
+                                th:href="@{/permissao/listar/{ordenar}(ordenar=true)}"
                                 sec:authorize="hasAuthority('Administrador')"
                                 th:title="#{global.link.print}">
                                 <i class="fa-solid fa-print fa-2xl" style="color: #000000; padding-left: 5px;"></i>
                             </a>
                             <!-- Novo botão: Cadastrar Nova Permissão -->
-                            <a class="btn-alink"
+                            <a class="btn-alink mx-2"
                                href="#"
                                th:title="#{table.permissao.nova}"
                                sec:authorize="hasAuthority('Administrador')"
@@ -62,7 +62,7 @@
                                        href="#"
                                        sec:authorize="hasAuthority('Administrador')"
                                        th:title="#{global.link.edit}"
-                                       th:attr="data-id=${nivel.entidadeID}, data-nome=${nivel.nome}"
+                                       th:attr="data-id=${nivel.entidadeID}, data-nome=${nivel.nome}, data-versao=${nivel.versao}"
                                        onclick="abrirFormularioPermissao(this)">
                                         <i class="fa-solid fa-pen-to-square text-black"></i>
                                     </a>&nbsp;
@@ -117,6 +117,7 @@
     function abrirFormularioPermissao(element) {
         const id = element ? element.getAttribute('data-id') : null;
         const nome = element ? element.getAttribute('data-nome') : null;
+        const versao = element ? element.getAttribute('data-versao') : 0;
 
         const titulo = id ? /*[[#{popup.permissao.editar.titulo}]]*/ 'Editar Permissão'
                           : /*[[#{popup.permissao.novo.titulo}]]*/ 'Nova Permissão';
@@ -133,6 +134,7 @@
                 <form id="formPermissao" action="${urlSalvarPermissao}" method="post">
                     <input type="hidden" name="_csrf" id="csrfField">
                     <input type="hidden" name="entidadeID" value="${id || ''}">
+                    <input type="hidden" name="versao" value="${versao || 0}">
                     <div class="form-group" style="text-align:center;">
                         <label for="nome">${labelTxt}</label>
                         <input type="text" id="nome" name="nome" class="swal2-input" required value="${nome || ''}">

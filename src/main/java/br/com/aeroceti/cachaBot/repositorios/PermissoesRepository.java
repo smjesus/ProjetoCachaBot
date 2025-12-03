@@ -27,25 +27,28 @@ import org.springframework.data.repository.query.Param;
 @Repository
 public interface PermissoesRepository extends JpaRepository<NivelAcesso, Long> {
 
+    // obtem o numero de Permissoes por nome
+    int countByNome(String ruleName);    
+
+    // obtem o numero de Permissoes por ID
+    int countByEntidadeID(Long entidadeID);
+
+    // obtem uma Permissao atraves do ID
+    Optional<NivelAcesso> findByEntidadeID(Long chavePesquisa);
+    
     // obtem uma lista de Permissoes ORDENADA por nome
     List<NivelAcesso> findByOrderByNomeAsc();
 
     // obtem uma Permissao atraves do nome
-    @Query("SELECT n FROM NivelAcesso n LEFT JOIN FETCH n.colaboradores WHERE n.nome = :nome")
-    Optional<NivelAcesso> findByNome(@Param("nome") String chavePesquisa);
+    Optional<NivelAcesso> findByNome(String chavePesquisa);
 
     // obtem uma lista de Colaboradores com PAGINACAO
     @Query(value = "select * from NivelAcesso order by nome ASC", nativeQuery = true )
     Page<NivelAcesso> findAllPermissoes(Pageable page);
 
-    // obtem uma Permissao atraves do ID
-    Optional<NivelAcesso> findByEntidadeID(Long chavePesquisa);
-
-    // obtem o numero de Permissoes por ID
-    int countByEntidadeID(Long entidadeID);
-    
-    // obtem o numero de Permissoes por nome
-    int countByNome(String ruleName);    
+    // obtem uma Permissao atraves do nome
+    @Query("SELECT n FROM NivelAcesso n LEFT JOIN FETCH n.colaboradores WHERE n.nome = :nome")
+    Optional<NivelAcesso> findByNomeAndColaboradores(@Param("nome") String chavePesquisa);
 
 }
 /*                    End of Class                                            */

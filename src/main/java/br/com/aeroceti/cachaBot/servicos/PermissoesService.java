@@ -16,9 +16,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import br.com.aeroceti.cachaBot.entidades.Colaborador;
 import br.com.aeroceti.cachaBot.entidades.NivelAcesso;
+import br.com.aeroceti.cachaBot.repositorios.ColaboradoresRepository;
 import br.com.aeroceti.cachaBot.repositorios.PermissoesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Classe de SERVICOS para o objeto Nivel de Acesso (Permissoes)
@@ -31,7 +34,9 @@ public class PermissoesService {
 
     @Autowired
     private PermissoesRepository permisaoRepository;
-
+    @Autowired
+    private ColaboradoresRepository userRepository;
+    
     private final Logger logger = LoggerFactory.getLogger(PermissoesService.class);
 
     /**
@@ -97,11 +102,24 @@ public class PermissoesService {
      * @param permissao - objeto a ser deletado
      * @return ResponseEntity - Mensagem de Erro ou Sucesso na operacao
      */
+    @Transactional
     public ResponseEntity<?> remover(NivelAcesso permissao) {
-        logger.info("Excluindo Permissao do banco de dados...");
-        permisaoRepository.delete(permissao);
-        logger.info("Requisicao executada: Servidor DELETADO no Sistema!");
-        return new ResponseEntity<>("Servidor DELETADO no Sistema!", HttpStatus.OK);
+        try {
+            List<Colaborador> colaboradores = permissao.getColaboradores();
+            if (colaboradores != null && !colaboradores.isEmpty()) {
+                for (Colaborador colaborador : colaboradores) {
+                    // Remove a referência do lado "many"
+                    colaborador.setNivelAcesso(null); 
+                }
+            }
+            userRepository.saveAll(colaboradores); 
+            permisaoRepository.delete(permissao);
+        } catch(Exception ex) {
+            logger.info("DabaBASE Error: {}.", ex.getMessage());            
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        logger.info("Requisicao executada: Nivel de Acesso DELETADA no Sistema!");
+        return new ResponseEntity<>("Nivel de Acesso DELETADA no Sistema!", HttpStatus.OK);
     }
     
 }

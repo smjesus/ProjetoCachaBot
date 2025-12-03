@@ -7,6 +7,7 @@
 package br.com.aeroceti.cachaBot.entidades;
 
 import java.util.Collection;
+import java.util.Objects;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,11 +28,20 @@ public class UsuarioLogin implements UserDetails {
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.createAuthorityList(usuario.getNivelAcesso().getNome());
+        String listAuthoriry = usuario.getNivelAcesso() == null ? "Convidado" : usuario.getNivelAcesso().getNome();
+        return AuthorityUtils.createAuthorityList(listAuthoriry);
     }
     
     public Long getId(){
         return usuario.getEntidadeID();
+    }
+    
+    public String getNomeUsuario() {
+        return usuario.getNomePessoal();
+    }
+    
+    public Colaborador getColaborador(){
+        return this.usuario;
     }
 
     @Override
@@ -48,13 +58,30 @@ public class UsuarioLogin implements UserDetails {
     public boolean isEnabled() {
         return usuario.isAtivo(); 
     }
-    
-    public String getNomeUsuario() {
-        return usuario.getNomePessoal();
+
+    @Override
+    public String toString() {
+        return this.getNomeUsuario() + "(" + this.getUsername() + ")";
     }
-    
-    public Colaborador getColaborador(){
-        return this.usuario;
+
+    @Override
+    public boolean equals(Object obj) {
+         // 1. Verificação de referência (se é o mesmo objeto na memória)
+        if (this == obj) {
+            return true;
+        }
+        // 2. Verificação de nulidade do objeto 'obj' e compatibilidade de classe
+        if (!(obj instanceof UsuarioLogin)) {
+            return false;
+        }
+        // 3. Comparação dos atributos usando Objects.equals() para segurança contra NullPointerException
+        UsuarioLogin other = (UsuarioLogin) obj;
+        return Objects.equals(this.getColaborador(), other.getColaborador());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
 
 }

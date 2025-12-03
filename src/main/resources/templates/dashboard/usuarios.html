@@ -23,7 +23,7 @@
                     <!--    Titulo da Secao     -->
                     <div class="d-flex align-items-center justify-content-between" style="padding-left: 2%;padding-right: 2%;">
                         <h1 th:text="#{users.list}" class="m-0"></h1>
-                        <a class="btn-alink" th:href="@{/usuario/listar/{ordenar}(ordenar=true)}" sec:authorize="hasAuthority('Administrador')"  th:title="#{global.link.print}">
+                        <a class="btn-alink" target="_blank" th:href="@{/usuario/listar/{ordenar}(ordenar=true)}" sec:authorize="hasAuthority('Administrador')"  th:title="#{global.link.print}">
                             <i class="fa-solid fa-print fa-2xl" style="color: #000000;"></i></a>
                     </div>
                     <!--    Tabela com os dados da secao     -->
@@ -31,11 +31,12 @@
                         <thead>
                             <tr>
                                 <th th:text="#{table.usuario.id}"      style="width: 10%; text-align: center;"></th>
-                                <th th:text="#{table.usuario.name}"    style="width: 30%;"></th>
+                                <th th:text="#{table.usuario.name}"    style="width: 25%;"></th>
                                 <th th:text="#{table.usuario.email}"   style="width: 20%;"></th>
                                 <th th:text="#{table.usuario.ativo}"   style="width: 10%;"></th>
                                 <th th:text="#{table.usuario.perfil}"  style="width: 10%;"></th>
                                 <th th:text="#{table.usuario.totalServidores}"  style="text-align: center; width: 10%;"></th>
+                                <th style="text-align: center; width: 5%;"></th>
                                 <th th:text="#{table.usuario.actions}"          style="text-align: center;" colspan="3"  sec:authorize="hasAnyAuthority('Administrador', 'Gerente')"></th>
                             </tr>
                         </thead>
@@ -52,8 +53,20 @@
                                     <span th:if="${server.nivelAcesso != null}" th:text="${server.nivelAcesso.nome}"></span>
                                 </td>
                                 <td style="text-align: center;"><span th:text="${server.servidores.size}"></span></td>
+                                
+                                <!-- TROCAR SUA PROPRIA SENHA -->
+                                <td style="text-align: center;">
+                                    <!-- Botão de SENHA -->
+                                    <a class="btn-alink" th:href="@{/usuario/senha/{id}(id=${server.entidadeID})}" 
+                                                         th:title="#{global.link.password}"                                                         
+                                                         th:if="${#authentication.name == server.contaEmail }">
+                                        <i class="fa-solid fa-key text-black"></i>
+                                    </a>&nbsp;
+                                </td>
+                                
                                 <!-- ACOES -->
                                 <td style="text-align: center;" sec:authorize="hasAnyAuthority('Administrador','Gerente')">
+                                    <!-- Botão de EDITAR -->
                                     <a class="btn-alink" th:href="@{/usuario/atualizar/{id}(id=${server.entidadeID})}" 
                                                          th:title="#{global.link.edit}"
                                                          sec:authorize="hasAnyAuthority('Administrador','Gerente')"
@@ -84,8 +97,9 @@
                                     </a>
 
                                 </td>
-
+                                
                                 <td style="text-align: center;" sec:authorize="hasAnyAuthority('Administrador','Gerente')">
+                                    <!-- Botão de DELETAR -->
                                     <a class="btn-alink" th:href="@{/usuario/excluir/{id}(id=${server.entidadeID})}"
                                                          th:title="#{global.link.delete}"
                                                          sec:authorize="hasAnyAuthority('Administrador','Gerente')"

@@ -118,7 +118,8 @@ public class GerenteBotConfiguration {
                 Commands.slash("config", "Apresenta os valores da configuração atual no Servidor aos gerentes do Servidor."),
                 Commands.slash("nomeservidor", "Atualiza o nome do Servidor na Base de Dados ."),
                 Commands.slash("donoservidor", "Atualiza o dono do Servidor na Base de Dados .")
-                        .addOption(OptionType.STRING, "email-do-usuario", "Informe uma conta de e-mail válida do dono do Servidor.", true),
+                        .addOption(OptionType.STRING, "email-do-usuario", "Informe uma conta de e-mail válida do dono do Servidor.", true)
+                        .addOption(OptionType.STRING, "senha-do-usuario", "Informe uma senha forte (minimo: 8 caracteres, uma maiuscula, um numero e um simbolo).", true),
 
                 // Configura as informacoes para o Cadastro:
                 Commands.slash("habilitacadastro", "Habilita a Funcao de Cadastro de usuarios."),

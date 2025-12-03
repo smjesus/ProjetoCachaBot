@@ -4,7 +4,7 @@
     <!-- Console colorido -->
     <appender name="COLORED_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{dd-MM-yyyy HH:mm:ss} - %highlight(%-5level) [%cyan(%-25.25thread)] %magenta(%-30.30class{0}) - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss} %cyan(%-25.25thread) - %highlight(%-5level) [%yellow(CachaBOT)] %magenta(%-30.30class{0}) - %msg%n</pattern>
         </encoder>
     </appender>
 

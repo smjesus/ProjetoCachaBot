@@ -20,6 +20,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *  Objeto base Rules (Niveis de usuarios).
@@ -329,8 +330,28 @@ public class Servidor  implements Serializable {
 
     @Override
     public String toString() {
-        return "Servidor " + this.nome + "(" + this.servidorID + ")";
+        return this.nome  + "[ID=" + this.getEntidadeID() + "]";
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+         // 1. Verificação de referência (se é o mesmo objeto na memória)
+        if (this == obj) {
+            return true;
+        }
+        // 2. Verificação de nulidade do objeto 'obj' e compatibilidade de classe
+        if (!(obj instanceof Servidor)) {
+            return false;
+        }
+        // 3. Comparação dos atributos usando Objects.equals() para segurança contra NullPointerException
+        Servidor other = (Servidor) obj;
+        return Objects.equals(this.getEntidadeID(), other.getEntidadeID());
+   }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getEntidadeID());
+   }
+ 
 }
 /*                    End of Class                                            */

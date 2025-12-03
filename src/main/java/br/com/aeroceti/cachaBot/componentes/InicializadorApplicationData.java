@@ -63,7 +63,7 @@ public class InicializadorApplicationData implements CommandLineRunner {
             logger.info("Sistema CachaBot inicializando (Criada permissao de Gerente) ... ");
         }
         // Verifica se há administrador cadastrado:
-        Optional<NivelAcesso> permissaoSolicitada = nivelRepository.findByNome(permissao.getNome());
+        Optional<NivelAcesso> permissaoSolicitada = nivelRepository.findByNomeAndColaboradores(permissao.getNome());
         permissao = permissaoSolicitada.get();
         if( permissao.getColaboradores().isEmpty() ) {
             // Nao tem administrador, cadastrando um 'default':

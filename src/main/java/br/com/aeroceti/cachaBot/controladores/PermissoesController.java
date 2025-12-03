@@ -16,6 +16,7 @@ import br.com.aeroceti.cachaBot.entidades.NivelAcesso;
 import br.com.aeroceti.cachaBot.servicos.PermissoesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,13 +34,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PermissoesController {
 
     @Autowired
-    private final PermissoesService nivelService;
+    private PermissoesService nivelService;
     
     private final Logger logger = LoggerFactory.getLogger(PermissoesController.class);
 
-    public PermissoesController(PermissoesService servico) {
-        this.nivelService = servico;
-    }
 
     /**
      * Listagem de TODOS as Permissoes cadastradas no Banco de dados.
@@ -57,6 +55,13 @@ public class PermissoesController {
         return"/dashboard/permissoes-list";
     }
 
+    /**
+     * Listagem de TODAS as Permissoes cadastradas no Banco de dados (PAGINADA).
+     * 
+     * @param page     numero da pagina em exibicao
+     * @param pageSize total de itens na pagina
+     * @return ModelAndView preparada pelo Thymeleaf com o objeto para listagem.
+     */
     @RequestMapping("/paginar/{page}/{pageSize}")
     public ModelAndView listar( @PathVariable int page, @PathVariable int pageSize ) {
         logger.info("Servico de Solicitacao para listar as Permissoes PAGINADAS ...");
@@ -66,7 +71,8 @@ public class PermissoesController {
     }
 
     @PostMapping("/salvar")
-    public String salvarPermissao(@ModelAttribute NivelAcesso permissao) {
+    public String salvarPermissao(@ModelAttribute NivelAcesso permissao, BindingResult result) {
+        logger.info("Recebida requisicao para gravar/atualizar:  {}.", permissao.toString());
         nivelService.salvar(permissao);
         return "redirect:/permissao/paginar/1/10";
     }
@@ -84,7 +90,7 @@ public class PermissoesController {
         logger.info("Requisicao recebida: EXCLUIR PERMISSAO - ID: " + id);
         Optional<NivelAcesso> nivelSolicitado = nivelService.buscar(id);
         if( nivelSolicitado.isPresent() ) {
-            logger.info("ACHOU " + nivelSolicitado.get().getNome());
+            logger.info("Iniciando exclusao do Nivel de Acesso: {}. ",  nivelSolicitado.get().getNome());
             nivelService.remover(nivelSolicitado.get());
         } else {
             logger.info("Processando requisicao: ALTERÇÃO NÃO REALIZADA - Referencia Invalida! ");

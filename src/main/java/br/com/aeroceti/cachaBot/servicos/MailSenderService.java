@@ -13,7 +13,8 @@ import java.nio.charset.StandardCharsets;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-import br.com.aeroceti.cachaBot.entidades.dto.EmailMessage;
+import br.com.aeroceti.cachaBot.entidades.dto.EmailMessageDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -29,16 +30,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 @Service
 public class MailSenderService {
     
-    private final JavaMailSender mailSender;
-    private final SpringTemplateEngine templateEngine;
+    @Autowired
+    private JavaMailSender mailSender;
+    @Autowired
+    private SpringTemplateEngine templateEngine;
 
-    private final String defaultFrom;
-    
-    public MailSenderService(JavaMailSender sender, SpringTemplateEngine templateEngine, @Value("${spring.mail.username}") String defaultFrom) {
-        this.mailSender = sender;
-        this.templateEngine = templateEngine;
-        this.defaultFrom = defaultFrom;
-    }
+    @Value("${spring.mail.username}") 
+    private String defaultFrom;
     
     /**
      * Envia um e-mail HTML simples.
@@ -46,7 +44,7 @@ public class MailSenderService {
      * @param message DTO contendo os dados para o email
      * @throws MessagingException em caso de erro no envio
      */
-    public void sendHtmlEmail(EmailMessage message) throws MessagingException {
+    public void sendHtmlEmail(EmailMessageDTO message) throws MessagingException {
         MimeMessage mime = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(
                 mime, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
@@ -67,13 +65,13 @@ public class MailSenderService {
      * 
      * Templates ficam em src/main/resources/templates/ (ex: templates/email/welcome.html)
      * @param templateName nome do template (ex: "email/welcome")
-     * @param message EmailMessage DTO com os dados do email
+     * @param message EmailMessageDTO DTO com os dados do email
      * @param model Dados do template (objeto de domínio, pode ser o próprio record)
      * @param baseUrl
      * @param token
      * @throws MessagingException em caso de erro
      */
-    public void sendTemplateEmail(EmailMessage message, String templateName, Object model, String baseUrl, String token) throws MessagingException {
+    public void sendTemplateEmail(EmailMessageDTO message, String templateName, Object model, String baseUrl, String token) throws MessagingException {
         Context context = new Context();
         // adiciona o model como "email" no template
         context.setVariable("email",   message);
@@ -84,7 +82,7 @@ public class MailSenderService {
         String html = templateEngine.process(templateName, context);
 
         // reutiliza o método padrão
-        sendHtmlEmail(new EmailMessage(
+        sendHtmlEmail(new EmailMessageDTO(
                 message.to(),
                 message.from(),
                 message.nomeUsuario(),

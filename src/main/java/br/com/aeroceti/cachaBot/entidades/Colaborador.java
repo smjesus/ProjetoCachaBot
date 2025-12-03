@@ -7,6 +7,7 @@
 package br.com.aeroceti.cachaBot.entidades;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.ArrayList;
 import jakarta.persistence.Id;
 import jakarta.persistence.Basic;
@@ -25,6 +26,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import br.com.aeroceti.cachaBot.componentes.SenhasIguais;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 
 /**
  *  Objeto base Colaborador (Usuario do Sistema).
@@ -38,6 +41,7 @@ import br.com.aeroceti.cachaBot.componentes.SenhasIguais;
 @SenhasIguais
 @Table(name = "Colaborador")
 public class Colaborador {
+    
     private static final long serialVersionUID = 4L;
     
     @Id
@@ -49,15 +53,17 @@ public class Colaborador {
     @Column(name = "nomePessoal")
     private String nomePessoal;
     
+    @NotNull(message = "{form.user.nome.notnull}")
+    @NotBlank(message = "{form.user.email.notblank}")  @Email(message = "{form.user.email.notvalid}")
+    @Pattern(
+        regexp = "^[^@]+@[^@]+(\\.[a-zA-Z]{2,})+$",
+        message = "{form.user.email.notcomplete}"
+    )            
     @Column(name = "contaEmail")
     private String contaEmail;
     
-    @NotBlank(message = "A senha é obrigatória.")
-    @Size(min = 8, message = "A senha deve ter pelo menos 8 caracteres.")
-    @Pattern(
-        regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$",
-        message = "A senha deve conter letras maiúsculas, minúsculas, números e símbolos."
-    )
+    @NotBlank(message = "{form.user.password.notblank}")
+    @Size(min = 6, message = "{form.user.password.valid}")
     @Column(name = "codigoAcesso")
     private String codigoAcesso;
     
@@ -217,7 +223,27 @@ public class Colaborador {
     
     @Override
     public String toString() {
-        return "Colaborador " + this.nomePessoal + "(" + this.entidadeID + ")";
+        return this.nomePessoal + "[ID=" + this.entidadeID + "]";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        // 1. Verificação de referência (se é o mesmo objeto na memória)
+        if (this == obj) {
+            return true;
+        }
+        // 2. Verificação de nulidade do objeto 'obj' e compatibilidade de classe
+        if (!(obj instanceof Colaborador)) {
+            return false;
+        }
+        // 3. Comparação dos atributos usando Objects.equals() para segurança contra NullPointerException
+        Colaborador other = (Colaborador) obj;
+        return Objects.equals(this.getEntidadeID(), other.getEntidadeID());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getEntidadeID());
     }
 
 }

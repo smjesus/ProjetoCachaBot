@@ -26,114 +26,100 @@
                         <span th:text="${mensagem}"></span>
                     </div>
 
-                    
-                    <!--    Formulario com os dados da secao     -->
-                    <form class="cachaCard" action="#" th:action="@{/usuario/atualizar}" th:object="${colaborador}" method="post">
-                    
-                        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-                            </ul>
+                    <form class="cachaCard" th:action="@{/usuario/atualizar}" th:object="${colaboradorDTO}" method="post"  novalidate="">
+
+                        <!-- STATUS -->
+                        <div class="row m-1 mb-3 align-items-center bg-light rounded shadow-sm p-2">
+                            <label class="col-sm-2 col-form-label" th:text="#{form.user.active}"></label>
+                            <div class="col-sm-5 d-flex justify-content-between">
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           th:field="*{ativo}"
+                                           value="true"
+                                           th:checked="${colaboradorDTO.ativo()}" />
+                                    <label class="form-check-label" th:text="#{form.user.yes}"></label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           th:field="*{ativo}"
+                                           value="false"
+                                           th:checked="${!colaboradorDTO.ativo()}" />
+                                    <label class="form-check-label" th:text="#{form.user.no}"></label>
+                                </div>
+
+                            </div>
                         </div>
-   
-                        <!--  NOME  DO USUARIO   -->
+
+                        <!-- NOME -->
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" th:text="#{form.user.nome}"></label>
                             <div class="col-sm-5">
-                                <input class="form-control" type="text" th:field="*{nomePessoal}" /> 
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="*{nomePessoal}"
+                                       th:value="${colaboradorDTO.nomePessoal()}" />
                             </div>
-                            <div class="col-sm-5"> 
-                                <span class="mensagem" th:if="${#fields.hasErrors('nomePessoal')}" th:errors="*{nomePessoal}"></span>
-                            </div>				
+                            <div class="col-sm-5">
+                                <span class="mensagem"
+                                      th:if="${#fields.hasErrors('nomePessoal')}"
+                                      th:errors="*{nomePessoal}"></span>
+                            </div>
                         </div>
-                        
-                        <!--  EMAIL  DO USUARIO   -->
+
+                        <!-- EMAIL -->
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" th:text="#{form.user.email}"></label>
                             <div class="col-sm-5">
-                                <input class="form-control" type="email" th:field="*{contaEmail}" /> 
-                            </div>
-                            <div class="col-sm-5"> 
-                                <span class="mensagem" th:if="${#fields.hasErrors('contaEmail')}" th:errors="*{contaEmail}"></span>
-                            </div>				
-                        </div>
-
-                        <!-- SENHA -->
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" th:text="#{form.user.senha}"></label>
-                            <div class="col-sm-5">
-                                <input class="form-control" type="password" th:field="*{codigoAcesso}" required="true" minlength="8"
-                                       pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$"
-                                       title="A senha deve ter ao menos 8 caracteres, incluindo letra maiúscula, minúscula, número e símbolo." />
-                            </div>
-                            <div class="col-sm-5 alert">
-                                <span class="mensagem" th:if="${#fields.hasErrors('codigoAcesso')}"  th:errors="*{codigoAcesso}"></span>
-                            </div>
-                        </div>
-                        <!-- CONFIRMAR SENHA -->
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" th:text="#{form.user.confirma-senha}"></label>
-                            <div class="col-sm-5">
-                                <input class="form-control" type="password" th:field="*{confirmarSenha}" required title="Repita a mesma senha." />
-                            </div>
-                            <div class="col-sm-5 alert">
-                                <span class="mensagem" th:if="${#fields.hasErrors('confirmarSenha')}" th:errors="*{confirmarSenha}"></span>
-                            </div>
-                        </div>
-                        
-                        <!--  STATUS DO USUÁRIO  -->
-                        <div class="row mb-3 align-items-center">
-                            <label class="col-sm-2 col-form-label" th:text="#{form.user.active}"></label>
-                            <div class="col-sm-5">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio"     th:field="*{ativo}" th:value="true" id="ativoTrue" />
-                                    <label class="form-check-label" for="ativoTrue"  th:text="#{form.user.yes}">Ativo</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio"     th:field="*{ativo}" th:value="false"id="ativoFalse" />
-                                    <label class="form-check-label" for="ativoFalse" th:text="#{form.user.no}">Inativo</label>
-                                </div>
+                                <input class="form-control"
+                                       type="email"
+                                       th:field="*{contaEmail}"
+                                       th:value="${colaboradorDTO.contaEmail()}" />
                             </div>
                             <div class="col-sm-5">
-                                <span class="mensagem" th:if="${#fields.hasErrors('ativo')}" th:errors="*{ativo}"></span>
+                                <span class="alert alert-danger"
+                                      th:if="${#fields.hasErrors('contaEmail')}"
+                                      th:errors="*{contaEmail}"></span>
                             </div>
                         </div>
 
-                        <!--  NÍVEL DE ACESSO  -->
-                        <div class="row mb-3"  sec:authorize="hasAuthority('Administrador')" >
+                        <!-- NÍVEL DE ACESSO -->
+                        <div class="row mb-3" sec:authorize="hasAuthority('Administrador')">
                             <label class="col-sm-2 col-form-label" th:text="#{form.user.accessLevel}"></label>
                             <div class="col-sm-5">
-                                <select class="form-select" th:field="*{nivelAcesso}">
+                                <select class="form-select"  th:field="*{nivelAcessoId}" >
                                     <option value="" th:text="#{form.user.select}">-- Selecione --</option>
+
                                     <option th:each="nivel : ${permissoesList}"
                                             th:value="${nivel.entidadeID}"
+                                            th:selected="${nivel.entidadeID == colaboradorDTO.nivelAcessoId()}"
                                             th:text="${nivel.nome}">
                                     </option>
                                 </select>
                             </div>
+
                             <div class="col-sm-5">
                                 <span class="mensagem"
-                                      th:if="${#fields.hasErrors('nivelAcesso')}"
-                                      th:errors="*{nivelAcesso}"></span>
+                                      th:if="${#fields.hasErrors('nivelAcessoId')}"
+                                      th:errors="*{nivelAcessoId}"></span>
                             </div>
                         </div>
 
-                        <!--  CAMPOS HIDDEN  -->
-                        <div class="row mb-3">
-                            <div class="col-sm-12">
-                                <input class="form-control" type="hidden" th:field="*{nivelAcesso}"  sec:authorize="hasAuthority('Gerente')"  /> 
-                                <input class="form-control" type="hidden" th:field="*{entidadeID}" /> 
-                                <input class="form-control" type="hidden" th:field="*{versao}" /> 
-                            </div>
-                        </div>                                     
+                        <!-- CAMPOS HIDDEN (APENAS ID DO USUÁRIO) -->
+                        <input type="hidden"  name="entidadeID"   th:value="${colaboradorDTO.entidadeID()}" />
 
-                        <input  class="btn btn-primary btn-xl" type="submit" th:value="#{form.user.update}"/>
-                    </form>	
+                        <!-- BOTÃO -->
+                        <input class="btn btn-primary btn-xl" type="submit" th:value="#{form.user.update}" />
+
+                    </form>
                 </div>
             </section>
             <!--  FIM DO CONTEUDO DINAMICO  -->
             <!--  RODAPE DA PAGINA  -->
-            <div th:insert="~{modulos/fragmento-footer-blank :: footer-limpo}"></div>
+            <div th:insert="~{modulos/fragmento-footer-clean :: footer-clean}"></div>
         </div>
     </div>
 </body>

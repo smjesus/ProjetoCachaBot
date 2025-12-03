@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -107,7 +108,31 @@ public class UsuarioVerificador {
     public void setUsuario(Colaborador usuario) {
         this.usuario = usuario;
     }
-    
+
+    @Override
+    public String toString() {
+        return this.getCodigoUUID()  + "[ID=" + this.getVerificadorID() + "]";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+         // 1. Verificação de referência (se é o mesmo objeto na memória)
+        if (this == obj) {
+            return true;
+        }
+        // 2. Verificação de nulidade do objeto 'obj' e compatibilidade de classe
+        if (!(obj instanceof UsuarioVerificador)) {
+            return false;
+        }
+        // 3. Comparação dos atributos usando Objects.equals() para segurança contra NullPointerException
+        UsuarioVerificador other = (UsuarioVerificador) obj;
+        return Objects.equals( this.getCodigoUUID() , other.getCodigoUUID() );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getVerificadorID());
+    }
     
 }
 /*                    End of Class                                            */

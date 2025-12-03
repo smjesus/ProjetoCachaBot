@@ -9,263 +9,261 @@
 <head th:insert="~{modulos/fragmento-header :: header-section}">
     <title>CachaBOT</title>
 </head>
-    
-    <body id="page-top">
 
-        <div th:insert="~{modulos/fragmento-menu-web :: navbar-menuprincipal}"></div>
-        
-        <!-- Header-->
-        <header class="masthead d-flex align-items-center">
-            <div class="container px-4 px-lg-5 text-center">
-                <h1 class="mb-1">CachaBOT</h1>
-                <h3 class="mb-5"><em><span th:text="#{home.text.documentacao-h1}"/></em></h3>
-            </div>
-        </header>
+<body id="page-top">
 
-        <!-- OBJETIVOS -->
-        <section class="content-section bg-light" id="about">
-            <div class="container px-4 px-lg-5 text-center">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-10">
-                        <h2>Objetivos e Fun&ccedil;&otilde;es do CachaBot</h2>
-                        <p class="lead mb-5">
-                            O CachaBot tem por objetivo automatizar as seguintes tarefas:
-                        </p>
-                        <div style="text-align: left; font-weight: normal; ">
-                            <ul>
-                                <li>Definir um <B>"Cargo Provisório"</B> para os usuarios ao entrarem no servidor.</li><BR>
-                            
-                                <li>Fazer a <B>Verifica&ccedil;&atilde;o</B> dos novos usuarios<BR>
-                                    No canal de "Boas Vindas" que será definido pelo administrador do Servidor,
-                                    sera apresentado uma mensagem de boas vindas e um botao para o usuario confirmar sua
-                                    participacao na comunidade. <BR>
-                                    Apos a confirmacao do usuario, o CachaBOT retira o cargo provisorio e atribui o "Cargo Definitivo".<BR>
-                                    Estes cargos serao definidos pelo administrador atraves dos comandos de barra.</li><BR> 
-                                
-                                <li>Definir a <B>Mensagem de Boas Vindas</B> e definir o canal de apresentacao da mensagem<BR>
-                                    Atraves dos comandos de barra, o administrador podera definir a mensagem de boas vindas, especificar o canal onde ela sera 
-                                    apresentada (ver comandos de barra na proxima seção).</li>
-                                
-                            </ul>    
-                        </div>
-                        
+    <div th:insert="~{modulos/fragmento-menu-web :: navbar-menuprincipal}"></div>
+
+    <!-- Header-->
+    <header class="masthead d-flex align-items-center">
+        <div class="container px-4 px-lg-5 text-center">
+            <h1 class="mb-1">CachaBOT</h1>
+            <h3 class="mb-5"><em><span th:text="#{home.text.documentacao-h1}"/></em></h3>
+        </div>
+    </header>
+
+    <!-- OBJETIVOS -->
+    <section class="content-section bg-light" id="about">
+        <div class="container px-4 px-lg-5 text-center">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-12">
+                    <h2>Objetivos e Fun&ccedil;&otilde;es do CachaBot</h2>
+                    <p class="lead mb-5">
+                        O CachaBot tem por objetivo automatizar as seguintes tarefas:
+                    </p>
+                    <div style="text-align: left; font-weight: normal; ">
+                        <ul>
+                            <li>Definir um <B>"Cargo Provisório"</B> para os usuarios ao entrarem no servidor.</li><BR>
+
+                            <li>Fazer a <B>Verifica&ccedil;&atilde;o</B> dos novos usuarios<BR>
+                                No canal de "Boas Vindas" que será definido pelo administrador do Servidor,
+                                sera apresentado uma mensagem de boas vindas e um botao para o usuario confirmar sua
+                                participacao na comunidade. <BR>
+                                Apos a confirmacao do usuario, o CachaBOT retira o cargo provisorio e atribui o "Cargo Definitivo".<BR>
+                                Estes cargos serao definidos pelo administrador atraves dos comandos de barra.</li><BR> 
+
+                            <li>Definir a <B>Mensagem de Boas Vindas</B> e definir o canal de apresentacao da mensagem<BR>
+                                Atraves dos comandos de barra, o administrador podera definir a mensagem de boas vindas, especificar o canal onde ela sera 
+                                apresentada (ver comandos de barra na proxima seção).</li>
+
+                        </ul>    
                     </div>
+
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- MANUAL  -->
-        <section class="content-section bg-dark text-white">
-            <div class="container px-4 px-lg-5 text-center">
-                <div class="col-sm-1 col-lg-1">&nbsp;</div>
-                <div class="panel panel-success text-center col-sm-10 col-lg-10">
-                    <div class="panel-heading"><h3>Procedimentos Iniciais para ativar o CachaBot</h3><BR></div>
-                    <div class="panel-body"> 
-                        <table class="table" style="color: #ffffff">
+    <!-- MANUAL  -->
+    <section class="content-section bg-dark text-white">
+        <div class="container px-4 px-lg-5 text-center">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="panel-heading"><h3>Procedimentos Iniciais para ativar o CachaBot</h3><BR></div>
+                <div class="panel-body"> 
+                    <table class="table" style="color: #ffffff">
 
-                            <tbody style="text-align: left;">
-                                <tr class="text-left">
-                                    <td>O primeiro passo &eacute; instalar o CachaBOT no seu servidor, clicando para isso no bot&atilde;o "Acidionar ao Servidor" 
-                                        que está na p&aacute;gina principal.</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>No segundo passo deve-se atribuir ao CachaBot um cargo superior aos cargos "provis&oacute;rio" e o "definitivo", pois caso
-                                        contrario o Bot n&atilde;o conseguir&aacute; atribuir os cargos aos usu&aacute;rios.</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>Por fim, o terceiro passo seria configurar as devidas permissões nos canais onde o CachaBot ir&aacute; atuar (escrever uma mensagen,
-                                        limpar conversar, apresentar Mensagem Embebed, etc).<BR><BR>
-                                        Não se esque&ccedil;a de <u>informar o seu email</u> usando o comando <B>/donoservidor</B>; bem como manter o nome do servidor atualizado
-                                        caso voc&ecirc; o modifique.
-                                    </td>
-                                </tr>
-                            </tbody>
-                         </table>
-                    </div> 
+                        <tbody style="text-align: left;">
+                            <tr class="text-left">
+                                <td>O primeiro passo &eacute; instalar o CachaBOT no seu servidor, clicando para isso no bot&atilde;o "Acidionar ao Servidor" 
+                                    que está na p&aacute;gina principal.</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>No segundo passo deve-se atribuir ao CachaBot um cargo superior aos cargos "provis&oacute;rio" e o "definitivo", pois caso
+                                    contrario o Bot n&atilde;o conseguir&aacute; atribuir os cargos aos usu&aacute;rios.</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>Por fim, o terceiro passo seria configurar as devidas permissões nos canais onde o CachaBot ir&aacute; atuar (escrever uma mensagen,
+                                    limpar conversar, apresentar Mensagem Embebed, etc).<BR><BR>
+                                    Não se esque&ccedil;a de <u>informar o seu email</u> usando o comando <B>/donoservidor</B>; bem como manter o nome do servidor atualizado
+                                    caso voc&ecirc; o modifique. Com o comando <B>/donoservidor</B> voc&ecirc; cadastra também uma senha que permite acessar o Painel Administrativo do <b>CachaBOT</b>.<BR>
+                                    Caso esque&ccedil;a a senha &eacute; s&oacute; executar o comando novamente que sua senha ser&aacute; atualizada (mas sua conta volta ao status <b>Inativo</b>, basta confirmar atrav&eacute;s do link
+                                    enviado para o e-mail informado no comando e pronto!
+                                </td>
+                            </tr>
+                        </tbody>
+                     </table>
+                </div> 
 
-                    <div class="panel-heading"><BR><BR><BR><h3>Comandos relacionados aos Cargos</h3><BR></div>
-                    <div class="panel-body">
-                        <table class="table" style="color: #ffffff">
-                            <thead>
-                                <tr class="text-center">
-                                    <th>Comando</th>
-                                    <th>Fun&ccedil;&atilde;o</th>
-                                </tr>
-                            </thead>
-                            <tbody style="text-align: left;">
-                                <tr class="text-left">
-                                    <td>/ajuda</td>
-                                    <td>Apresenta uma orientação sobre o Bot Gerente</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/listarcargos</td>
-                                    <td>Apresenta os cargos registrados no servidor</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/cargoprovisorio</td>
-                                    <td>Define o cargo padrão que todo usuário ira receber provisóriamente assim que entrarem no Servidor<BR>O CARGO deve ser informado pelo seu <B>ID</B></td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/cargodefinitivo</td>
-                                    <td>Define o cargo definitivo que os usuários receberao ao serem "Verificados"<BR>O CARGO deve ser informado pelo seu <B>ID</B></td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/cargosuporte</td>
-                                    <td>Define o cargo de Suporte T&eacute;cnico para usuários que poder&atilde;o configurar o CachaBOT no servidor.<BR>O CARGO deve ser informado pelo seu <B>ID</B></td>
-                                </tr>
-                            </tbody>
-                         </table>
-                    </div>
-                    
-                    <div class="panel-heading"><BR><BR><BR><h3>Comandos relacionados a Boas Vindas</h3><BR></div>
-                    <div class="panel-body"> 
-                        <table class="table" style="color: #ffffff">
-                            <thead>
-                                <tr class="text-center">
-                                    <th>Comando</th>
-                                    <th>Fun&ccedil;&atilde;o</th>
-                                </tr>
-                            </thead>
-                            <tbody style="text-align: left;">
-                                <tr class="text-left">
-                                    <td>/salaboasvindas</td>
-                                    <td>Define a Sala Inicial que todo usuário terá acesso (Boas Vindas)<BR>A SALA deve ser informada pelo seu <B>ID</B></td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/msgtitulo</td>
-                                    <td>Define o TITULO da Mensagem de Boas Vindas</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/msgcorpo</td>
-                                    <td>Define o CONTEUDO da Mensagem de Boas Vindas<BR>
-                                            <a href="#conteudo-mensagem" style="color: #ffffff" >Veja como definir o conte&uacute;do abaixo!</a></td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/msgcor</td>
-                                    <td>Define a COR da barra lateral da Mensagem de Boas Vindas<BR>As cores aceitas sao: VERDE, AMARELA, AZUL, LARANJA e BRANCA (epecificar em <b>maiusculas</b>).<BR>
-                                        A cor DEFAULT e a <B>BRANCA</B>.</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/msglinha</td>
-                                    <td>Define a URL de uma imagem de uma barra (ou linha) que sera apresentada no final da Mensagem de Boas Vindas.</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/msgicone</td>
-                                    <td>Define a URL de uma imagem para ser o ICONE da Mensagem de Boas Vindas.</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/boasvindas</td>
-                                    <td>Apresenta a Mensagem de boas vindas no canal de verificacao.</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>/msgparticipacao</td>
-                                    <td>Define a mensagem que o usuário irá receber após clicar em "Participar" (botão da mensagem de boas vindas).</td>
-                                </tr>
-                            </tbody>
-                         </table>
-                    </div>
-
-                    <div class="panel-heading"><BR><BR><BR><h3>Comandos de uso geral</h3><BR></div>
-                    <div class="panel-body">
-                        <table class="table" style="color: #ffffff">
-                            <thead>
+                <div class="panel-heading"><BR><BR><BR><h3>Comandos relacionados aos Cargos</h3><BR></div>
+                <div class="panel-body">
+                    <table class="table" style="color: #ffffff">
+                        <thead>
                             <tr class="text-center">
                                 <th>Comando</th>
                                 <th>Fun&ccedil;&atilde;o</th>
                             </tr>
-                            </thead>
-                            <tbody style="text-align: left;">
+                        </thead>
+                        <tbody style="text-align: left;">
                             <tr class="text-left">
-                                <td>/clear</td>
-                                <td>Limpa todas as mensagens postadas em um canal.<BR>
-                                    O usu&aacute;rio para executar esse comando deve possuir permiss&atilde;o de Gerenciar Mensagens no canal.</td>
+                                <td>/ajuda</td>
+                                <td>Apresenta uma orientação sobre o Bot Gerente</td>
                             </tr>
                             <tr class="text-left">
-                                <td>/config</td>
-                                <td>Apresenta todas as configura&ccedil;&otilde;es do servidor para confer&ecirc;ncia.<BR>
-                                    Somente um usu&aacute;rio com o Cargo de Suporte T&eacute;cnico pode ver as configura&ccedil;&otilde;es</td>
+                                <td>/listarcargos</td>
+                                <td>Apresenta os cargos registrados no servidor</td>
                             </tr>
                             <tr class="text-left">
-                                <td>/nomeservidor</td>
-                                <td>Atualiza o <B>Nome do Servidor</B> na Base de Dados caso o proprietário o tenha alterado.<BR>
-                                    Qualquer usu&aacute;rio pode executar esse comando, mas o nome do servidor &eacute; obtido do proprio Servidor.</td>
+                                <td>/cargoprovisorio</td>
+                                <td>Define o cargo padrão que todo usuário ira receber provisóriamente assim que entrarem no Servidor<BR>O CARGO deve ser informado pelo seu <B>ID</B></td>
                             </tr>
                             <tr class="text-left">
-                                <td>/donoservidor</td>
-                                <td>Cadastra na Base de Dados o nome e email do Dono do Servidor.<BR>
-                                    Somente o propriet&aacute;rio pode executar esse comando.</td>
+                                <td>/cargodefinitivo</td>
+                                <td>Define o cargo definitivo que os usuários receberao ao serem "Verificados"<BR>O CARGO deve ser informado pelo seu <B>ID</B></td>
                             </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            <tr class="text-left">
+                                <td>/cargosuporte</td>
+                                <td>Define o cargo de Suporte T&eacute;cnico para usuários que poder&atilde;o configurar o CachaBOT no servidor.<BR>O CARGO deve ser informado pelo seu <B>ID</B></td>
+                            </tr>
+                        </tbody>
+                     </table>
+                </div>
 
-                    <div class="panel-heading"><BR><BR><h3>Exemplo de mensagem de Boas Vindas configurada:</h3><BR></div>
-                    <div class="panel-body"><img th:src="@{/assets/msg_embed.webp}" /></div>
-                    
-                    <div class="panel-heading"><BR><BR><BR><h3 id="conteudo-mensagem">Como montar sua mensagem de Boas Vindas.</h3><BR></div>
-                    <div class="panel-body"> 
-                        <table class="table" style="color: #ffffff">
+                <div class="panel-heading"><BR><BR><BR><h3>Comandos relacionados a Boas Vindas</h3><BR></div>
+                <div class="panel-body"> 
+                    <table class="table" style="color: #ffffff">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Comando</th>
+                                <th>Fun&ccedil;&atilde;o</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align: left;">
+                            <tr class="text-left">
+                                <td>/salaboasvindas</td>
+                                <td>Define a Sala Inicial que todo usuário terá acesso (Boas Vindas)<BR>A SALA deve ser informada pelo seu <B>ID</B></td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>/msgtitulo</td>
+                                <td>Define o TITULO da Mensagem de Boas Vindas</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>/msgcorpo</td>
+                                <td>Define o CONTEUDO da Mensagem de Boas Vindas<BR>
+                                        <a href="#conteudo-mensagem" style="color: #ffffff" >Veja como definir o conte&uacute;do abaixo!</a></td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>/msgcor</td>
+                                <td>Define a COR da barra lateral da Mensagem de Boas Vindas<BR>As cores aceitas sao: VERDE, AMARELA, AZUL, LARANJA e BRANCA (epecificar em <b>maiusculas</b>).<BR>
+                                    A cor DEFAULT e a <B>BRANCA</B>.</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>/msglinha</td>
+                                <td>Define a URL de uma imagem de uma barra (ou linha) que sera apresentada no final da Mensagem de Boas Vindas.</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>/msgicone</td>
+                                <td>Define a URL de uma imagem para ser o ICONE da Mensagem de Boas Vindas.</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>/boasvindas</td>
+                                <td>Apresenta a Mensagem de boas vindas no canal de verificacao.</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>/msgparticipacao</td>
+                                <td>Define a mensagem que o usuário irá receber após clicar em "Participar" (botão da mensagem de boas vindas).</td>
+                            </tr>
+                        </tbody>
+                     </table>
+                </div>
 
-                            <tbody style="text-align: left;">
-                                <tr class="text-left">
-                                    <td>O CachaBOT formata sua mensagem de boas vindas através do comando de barra! 
-                        Como este meio é muito limitado para formatar uma mensagem, criamos um pequeno codigo de formataçao: </td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>- para mudar de linha utilize o caracter '|' duas vezes sem espaço.<BR>
-                                        - os codigos de formatacao do Discord podem ser usados<BR></td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>Assim, se no prompt de comando for digitado:</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td># Seja bem vindo à nossa Comunidade! || || Este espaço tem por objetivo a integração com os clientes, bem como disponibilizar as informações pertinentes a cada cliente dos serviços prestados. Pretendemos assim, ter um registro de todas as informações importantes dos serviços prestados em um único local e de acesso fácil aos clientes e prestador de serviços. || ||  Esta ferramenta também proporciona: ||* atendimento online||* suporte técnico através de chat, voz e vídeo||* reuniões on-line|| ||Esperamos contribuir assim para um melhor aproveitamento e satisfação do cliente.|| ||*Conte sempre conosco* !</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>Teremos um resultado igual ao da imagem acima do exemplo de mensagem de boas vindas.</td>
-                                </tr>
-                            </tbody>
-                         </table>
-                    </div> 
-                                        
-                    <div class="panel-heading"><BR><BR><h3>Procedimentos para EXCLUS&Atilde;O do CachaBot.</h3><BR></div>
-                    <div class="panel-body"> 
-                        <table class="table" style="color: #ffffff">
+                <div class="panel-heading"><BR><BR><BR><h3>Comandos de uso geral</h3><BR></div>
+                <div class="panel-body">
+                    <table class="table" style="color: #ffffff">
+                        <thead>
+                        <tr class="text-center">
+                            <th>Comando</th>
+                            <th>Fun&ccedil;&atilde;o</th>
+                        </tr>
+                        </thead>
+                        <tbody style="text-align: left;">
+                        <tr class="text-left">
+                            <td>/clear</td>
+                            <td>Limpa todas as mensagens postadas em um canal.<BR>
+                                O usu&aacute;rio para executar esse comando deve possuir permiss&atilde;o de Gerenciar Mensagens no canal.</td>
+                        </tr>
+                        <tr class="text-left">
+                            <td>/config</td>
+                            <td>Apresenta todas as configura&ccedil;&otilde;es do servidor para confer&ecirc;ncia.<BR>
+                                Somente um usu&aacute;rio com o Cargo de Suporte T&eacute;cnico pode ver as configura&ccedil;&otilde;es</td>
+                        </tr>
+                        <tr class="text-left">
+                            <td>/nomeservidor</td>
+                            <td>Atualiza o <B>Nome do Servidor</B> na Base de Dados caso o proprietário o tenha alterado.<BR>
+                                Qualquer usu&aacute;rio pode executar esse comando, mas o nome do servidor &eacute; obtido do proprio Servidor.</td>
+                        </tr>
+                        <tr class="text-left">
+                            <td>/donoservidor</td>
+                            <td>Cadastra na Base de Dados o nome, email (usado como login no painel administrativo) e senha do Dono do Servidor.<BR>
+                                Somente o propriet&aacute;rio pode executar esse comando.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                            <tbody style="text-align: left;">
-                                <tr class="text-left">
-                                    <td>Quando decidir n&atilde;o mais usar o CachaBOT no seu servidor, siga este passo-a-passo:</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>Primeiro, no Discord, retire o CachaBOT do seu servidor, clicando nele com o bot&atilde;o direito do mouse e no sub-menu que 
-                                        aparecer&aacute;, escolha "expulsar CachaBot".  Infome o motivo se desejar e clique no bot&atilde;o "Expulsar".</td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>Caso tenha acesso ao Painel Administrativo do CachaBot, fa&ccedil;a o login com sua conta e primeiro, delete o seu servidor da Lista de Servidores,
-                                        depois, caso desejar, delete seu usu&aacute;rio da Lista de Usu&aacute;rios.  Pronto, já pode fazer o Logout e o processo est&aacute; terminado.
-                                    </td>
-                                </tr>
-                                <tr class="text-left">
-                                    <td>Caso <b>N&Atilde;O</b> tenha acesso ao Painel Administrativo do CachaBot, basta nos enviar uma mensagem atrav&eacute;s do menu "Fale Conosco", 
-                                        informando o nome do seu servidor, o email que cadastrou como "Dono do Servidor"(comando de barra do Bot) e o seu Nome (no Discord) que breve 
-                                        iremos retirar todas as suas informa&ccedil;&otilde;es do sistema.
-                                    </td>
-                                </tr>
-                            </tbody>
-                         </table>
-                    </div> 
+                <div class="panel-heading"><BR><BR><h3>Exemplo de mensagem de Boas Vindas configurada:</h3><BR></div>
+                <div class="panel-body"><img th:src="@{/assets/msg_embed.webp}" /></div>
 
-                                        
-                </div>                    
-                <div class="col-sm-1 col-lg-1">&nbsp;</div>
-            </div>
-        </section>
-        
-        <!-- PRE-FOOTER COMUM -->
-        <div th:insert="~{modulos/fragmento-links-web :: pre-footer}"></div>
-                
-        <!-- ROODAPE DA PAGINA -->
-        <div th:insert="~{modulos/fragmento-footer-home :: navbar-footer}"></div>
-        
-    </body>
+                <div class="panel-heading"><BR><BR><BR><h3 id="conteudo-mensagem">Como montar sua mensagem de Boas Vindas.</h3><BR></div>
+                <div class="panel-body"> 
+                    <table class="table" style="color: #ffffff">
+
+                        <tbody style="text-align: left;">
+                            <tr class="text-left">
+                                <td>O CachaBOT formata sua mensagem de boas vindas através do comando de barra! 
+                                    Como este meio é muito limitado para formatar uma mensagem, criamos um pequeno codigo de formataçao: </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>- para mudar de linha utilize o caracter '|' duas vezes sem espaço.<BR>
+                                    - os codigos de formatacao do Discord podem ser usados<BR></td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>Assim, se no prompt de comando for digitado:</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td># Seja bem vindo à nossa Comunidade! || || Este espaço tem por objetivo a integração com os clientes, bem como disponibilizar as informações pertinentes a cada cliente dos serviços prestados. Pretendemos assim, ter um registro de todas as informações importantes dos serviços prestados em um único local e de acesso fácil aos clientes e prestador de serviços. || ||  Esta ferramenta também proporciona: ||* atendimento online||* suporte técnico através de chat, voz e vídeo||* reuniões on-line|| ||Esperamos contribuir assim para um melhor aproveitamento e satisfação do cliente.|| ||*Conte sempre conosco* !</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>Teremos um resultado igual ao da imagem acima do exemplo de mensagem de boas vindas.</td>
+                            </tr>
+                        </tbody>
+                     </table>
+                </div> 
+
+                <div class="panel-heading"><BR><BR><h3>Procedimentos para EXCLUS&Atilde;O do CachaBot.</h3><BR></div>
+                <div class="panel-body"> 
+                    <table class="table" style="color: #ffffff">
+
+                        <tbody style="text-align: left;">
+                            <tr class="text-left">
+                                <td>Quando decidir n&atilde;o mais usar o CachaBOT no seu servidor, siga este passo-a-passo:</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>Primeiro, no Discord, retire o CachaBOT do seu servidor, clicando nele com o bot&atilde;o direito do mouse e no sub-menu que 
+                                    aparecer&aacute;, escolha "expulsar CachaBot".  Infome o motivo se desejar e clique no bot&atilde;o "Expulsar".</td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>Caso tenha acesso ao Painel Administrativo do CachaBot, fa&ccedil;a o login com sua conta e primeiro, delete o seu servidor da Lista de Servidores,
+                                    depois, caso desejar, delete seu usu&aacute;rio da Lista de Usu&aacute;rios.  Pronto, já pode fazer o Logout e o processo est&aacute; terminado.
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>Caso <b>N&Atilde;O</b> tenha acesso ao Painel Administrativo do CachaBot, basta nos enviar uma mensagem atrav&eacute;s do menu "Fale Conosco", 
+                                    informando o nome do seu servidor, o email que cadastrou como "Dono do Servidor"(comando de barra do Bot) e o seu Nome (no Discord) que breve 
+                                    iremos retirar todas as suas informa&ccedil;&otilde;es do sistema.
+                                </td>
+                            </tr>
+                        </tbody>
+                     </table>
+                </div> 
+            </div>                    
+        </div>
+    </section>
+
+    <!-- PRE-FOOTER COMUM -->
+    <div th:insert="~{modulos/fragmento-links-web :: pre-footer}"></div>
+
+    <!-- ROODAPE DA PAGINA -->
+    <div th:insert="~{modulos/fragmento-footer-home :: navbar-footer}"></div>
+
+</body>
 </html>

@@ -31,13 +31,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class ServidoresController {
 
     @Autowired
-    private final ServidoresService servidorService;
+    private ServidoresService servidorService;
     
     private final Logger logger = LoggerFactory.getLogger(ServidoresController.class);
-
-    public ServidoresController(ServidoresService servico) {
-        this.servidorService = servico;
-    }
 
     /**
      * Listagem de TODOS os Servidores cadastradas no Banco de dados.
@@ -55,6 +51,13 @@ public class ServidoresController {
         return"/dashboard/servidores-list";
     }
 
+    /**
+     * Listagem PAGINADA dos Servidores cadastrados no Banco de Dados.
+     * 
+     * @param page - numero da pagina a ser exibida
+     * @param pageSize - total de itens na pagina a ser exibida
+     * @return  Model an View do Thymeleaf para a listagem paginada
+     */
     @RequestMapping("/paginar/{page}/{pageSize}")
     public ModelAndView listar( @PathVariable int page, @PathVariable int pageSize ) {
         logger.info("Servico de Solicitacao para listar os Servidores PAGINADOS ...");
@@ -73,10 +76,9 @@ public class ServidoresController {
     @GetMapping("/excluir/{id}")
     @PreAuthorize("hasAuthority('Administrador') or (hasAuthority('Gerente') and @servidoresService.isDonoDoServidor(principal.username, #id))")
     public String excluirServidor( @PathVariable("id") long id, Model modelo) {
-        logger.info("Requisicao recebida: EXCLUIR SERVIDOR ..." + id);
+        logger.info("Requisicao recebida: EXCLUIR um Servidor do Sistema: ID ={} ...", id);
         Optional<Servidor> serverSolicitado = servidorService.procurar(id);
         if( serverSolicitado.isPresent() ) {
-            logger.info("ACHOU " + serverSolicitado.get().getNome());
             servidorService.remover(serverSolicitado.get());
         } else {
             logger.info("Processando requisicao: ALTERÇÃO NÃO REALIZADA - Referencia Invalida! ");

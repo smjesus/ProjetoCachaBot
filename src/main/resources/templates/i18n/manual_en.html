@@ -26,7 +26,7 @@
     <section class="content-section bg-light" id="about">
         <div class="container px-4 px-lg-5 text-center">
             <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-10">
+                <div class="col-lg-12">
                     <h2>Objectives and Functions of CachaBOT</h2>
                     <p class="lead mb-5">
                         CachaBOT aims to automate the following tasks:
@@ -58,8 +58,7 @@
     <!-- MANUAL -->
     <section class="content-section bg-dark text-white">
         <div class="container px-4 px-lg-5 text-center">
-            <div class="col-sm-1 col-lg-1">&nbsp;</div>
-            <div class="panel panel-success text-center col-sm-10 col-lg-10">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
 
                 <div class="panel-heading">
                     <h3>Initial Procedures to Activate CachaBOT</h3><br>
@@ -78,7 +77,9 @@
                                 Finally, configure the proper permissions in the channels where CachaBOT will operate
                                 (send messages, clear chats, display embedded messages, etc).<br><br>
                                 Don’t forget to <u>register your email</u> using the <b>/donoservidor</b> command,
-                                and keep your server name updated if you change it.
+                                and keep your server name updated if you change it. With the command <B>/donoservidor</B> you also register a password that allows you to access the Administrative Panel of <b>CachaBOT</b>.<BR>
+                                If you forget your password, just run the command again and your password will be updated (but your account will return to the <b>Inactive</b> status, just confirm via the link
+                                sent to the email provided in the command and you're done!
                             </td></tr>
                         </tbody>
                     </table>
@@ -133,7 +134,7 @@
                             <tr><td>/clear</td><td>Clears all messages posted in a channel.<br>The user must have Manage Messages permission to execute this command.</td></tr>
                             <tr><td>/config</td><td>Displays all server configurations for verification.<br>Only users with the Technical Support Role can view configurations.</td></tr>
                             <tr><td>/nomeservidor</td><td>Updates the <b>Server Name</b> in the database if the owner has changed it.<br>Any user can run this command, but the server name is obtained directly from the server.</td></tr>
-                            <tr><td>/donoservidor</td><td>Registers the server owner's name and email in the database.<br>Only the owner can execute this command.</td></tr>
+                            <tr><td>/donoservidor</td><td>Register the Server Owner's name, email (used as login in the administrative panel), and password in the database.<br>Only the owner can execute this command.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -166,7 +167,6 @@
                     </table>
                 </div> 
             </div>                    
-            <div class="col-sm-1 col-lg-1">&nbsp;</div>
         </div>
     </section>
     

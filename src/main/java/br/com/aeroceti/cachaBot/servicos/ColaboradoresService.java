@@ -12,9 +12,13 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import br.com.aeroceti.cachaBot.entidades.Colaborador;
+import br.com.aeroceti.cachaBot.entidades.NivelAcesso;
+import br.com.aeroceti.cachaBot.entidades.Servidor;
 import br.com.aeroceti.cachaBot.entidades.UsuarioLogin;
 import br.com.aeroceti.cachaBot.entidades.UsuarioVerificador;
+import br.com.aeroceti.cachaBot.entidades.dto.ColaboradorDTO;
 import br.com.aeroceti.cachaBot.repositorios.ColaboradoresRepository;
+import br.com.aeroceti.cachaBot.repositorios.PermissoesRepository;
 import br.com.aeroceti.cachaBot.repositorios.UsuarioVerificadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +31,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Classe de SERVICOS para o objeto Colaborador
@@ -41,6 +46,8 @@ public class ColaboradoresService implements UserDetailsService {
     private PasswordEncoder          passwdEncoder ;
     @Autowired
     private ColaboradoresRepository  userRepository;
+    @Autowired
+    private PermissoesRepository     nivelRepository;    
     @Autowired
     private UsuarioVerificadorRepository  uuidRepository;
     
@@ -100,25 +107,24 @@ public class ColaboradoresService implements UserDetailsService {
      * @return OPTIONAL   - Objeto Optional contendo o Colaborador encontrado (se houver)
      */
     public Optional<Colaborador> buscar(Long identidade) {
-        logger.info("Obtendo um Colaborador pelo ID: " + identidade);
+        logger.info("Obtendo Colaborador pelo ID: " + identidade);
         return userRepository.findByEntidadeID(identidade);
     }
 
     public Optional<UsuarioVerificador> buscarVerificador(Long identidade) {
-        logger.info("Obtendo um Colaborador pelo ID: " + identidade);
+        logger.info("Obtendo Verificador de um Colaborador pelo ID: " + identidade);
        // Colaborador usuario = (Colaborador) buscar(identidade).get();
         return uuidRepository.findByUsuarioId(identidade);
     }
     
     public Optional<UsuarioVerificador> buscarVerificadorByUUID(UUID identidade) {
-        logger.info("Obtendo um Colaborador pelo UUID: " + identidade);
+        logger.info("Obtendo Verificador de um Colaborador pelo UUID: " + identidade);
        // Colaborador usuario = (Colaborador) buscar(identidade).get();
         return uuidRepository.findBycodigoUUID(identidade);
     }
-    
-    
+
     /**
-     * Metodo para atualizar um Colaborador na base de dados (Principalmente a senha).
+     * CRIPTOGRAFA a senha e atualiza o Colaborador na base de dados.
      *
      * @param usuario - Objeto Usuario com os dados a serem atualizados
      * @return ResponseEntity contendo uma mensagem de erro OU um objeto Usuario cadastrado
@@ -132,6 +138,39 @@ public class ColaboradoresService implements UserDetailsService {
         logger.info("Usuario " + usuario.getNomePessoal() + " atualizado no banco de dados!");
         return new ResponseEntity<>(userRepository.save(usuario), HttpStatus.OK);
     }
+    
+    @Transactional
+    public boolean atualizarDados(ColaboradorDTO dto) {
+        boolean resposta = false;
+        Optional<Colaborador> colaborador = userRepository.findByEntidadeID( dto.entidadeID() );
+        if( colaborador.isPresent() ) {
+            Colaborador usuario = colaborador.get();
+            usuario.setNomePessoal(dto.nomePessoal());
+            // atualiza o nivel
+            if (dto.nivelAcessoId() != null) {
+                Optional<NivelAcesso> nivel = nivelRepository.findByEntidadeID(dto.nivelAcessoId());
+                if( nivel.isPresent() )
+                    usuario.setNivelAcesso(nivel.get());
+            } else {
+                usuario.setNivelAcesso(null);
+            }
+            // atualiza o email (solicita a ativacao novamente)
+            if ( !usuario.getContaEmail().trim().equals(dto.contaEmail().trim()) ) {
+                // novo email:
+                usuario.setContaEmail(dto.contaEmail());
+                usuario.setAtivo(false);
+                resposta = true;
+            } else {
+                usuario.setAtivo(dto.ativo());
+            }
+            logger.info("Informacoes recebidas atualizados no Banco de Dados!");
+            userRepository.save(usuario);           
+        } else {
+            logger.info("GRAVACAO Nao realizada: Solicitacao Invalida!");
+        }
+        return resposta;
+    }
+
     
     /**
      * Salva um Colaborador que tenha alguma propriedade alterada (exceto senha)
@@ -165,6 +204,17 @@ public class ColaboradoresService implements UserDetailsService {
      */
     public ResponseEntity<?> remover(Colaborador usuario) {
         logger.info("Excluindo Usuario do banco de dados...");
+        // REMOVE vinculo com NivelAcesso:
+        usuario.setNivelAcesso(null);
+        for (Servidor servidor : usuario.getServidores()) {
+            servidor.setColaborador(null);
+        }
+        // REMOVE Verificador se existir:
+        Optional<UsuarioVerificador> solicitado = buscarVerificador(usuario.getEntidadeID());
+        if( solicitado.isPresent() ) {
+            deletarVerificador(solicitado.get());
+        }
+        userRepository.save(usuario);
         userRepository.delete(usuario);
         logger.info("Requisicao executada: usuario DELETADO no Sistema!");
         return new ResponseEntity<>("Usuario DELETADO no Sistema!", HttpStatus.OK);

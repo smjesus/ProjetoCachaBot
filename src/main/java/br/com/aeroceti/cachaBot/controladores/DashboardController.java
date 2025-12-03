@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Controller;
-import br.com.aeroceti.cachaBot.entidades.dto.EmailMessage;
+import br.com.aeroceti.cachaBot.entidades.dto.EmailMessageDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import br.com.aeroceti.cachaBot.servicos.I18nService;
 import br.com.aeroceti.cachaBot.servicos.MailSenderService;
@@ -119,7 +119,7 @@ public class DashboardController {
                 """, nome, telefone, email, mensagem);
 
         try {        
-            EmailMessage mailMessage = new EmailMessage(email, null, nome, "Formulário de Contado do CachaBOT", corpo);
+            EmailMessageDTO mailMessage = new EmailMessageDTO(email, null, nome, "Formulário de Contado do CachaBOT", corpo);
             logger.info("Enviando email de contado do Site CacahBOT produzido por {} ({}).", nome, email );
             mailSender.sendHtmlEmail(mailMessage);
             // mensagem de sucesso na View:

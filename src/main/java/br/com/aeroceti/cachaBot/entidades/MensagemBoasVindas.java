@@ -16,6 +16,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *  Objeto Mensagem de Boas Vindas.
@@ -174,8 +175,28 @@ public class MensagemBoasVindas  implements Serializable {
 
     @Override
     public String toString() {
-        return this.titulo + "(Versao: " + this.getVersao() + ")";
+        return this.titulo  + "[ID=" + this.getMensagemID() + "]";
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        // 1. Verificação de referência (se é o mesmo objeto na memória)
+        if (this == obj) {
+            return true;
+        }
+        // 2. Verificação de nulidade do objeto 'obj' e compatibilidade de classe
+        if (!(obj instanceof MensagemBoasVindas)) {
+            return false;
+        }
+        // 3. Comparação dos atributos usando Objects.equals() para segurança contra NullPointerException
+        MensagemBoasVindas other = (MensagemBoasVindas) obj;
+        return Objects.equals(this.getMensagemID(), other.getMensagemID());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getMensagemID());
+    }
+    
 }
 /*                    End of Class                                            */

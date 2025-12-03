@@ -12,7 +12,7 @@ package br.com.aeroceti.cachaBot.entidades.dto;
  * @author Sergio Murilo - smurilo at Gmail.com
  * @version 1.0
  */
-public record EmailMessage(String to, String from, String nomeUsuario, String subject, String textBody) {
+public record EmailMessageDTO(String to, String from, String nomeUsuario, String subject, String textBody) {
     
 }
 /*                    End of Class                                            */

@@ -129,7 +129,7 @@ public class ServidoresService {
      * @return ResponseEntity - Mensagem de Erro ou Sucesso na operacao
      */
     public ResponseEntity<?> remover(Servidor servidor) {
-        logger.info("Excluindo Servidor do banco de dados...");
+        logger.info("Excluindo Servidor {}, do banco de dados...", servidor.getNome());
         serverRepository.delete(servidor);
         logger.info("Requisicao executada: Servidor DELETADO no Sistema!");
         return new ResponseEntity<>("Servidor DELETADO no Sistema!", HttpStatus.OK);

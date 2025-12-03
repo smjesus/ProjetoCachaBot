@@ -27,13 +27,6 @@ import org.springframework.data.repository.query.Param;
 @Repository
 public interface ColaboradoresRepository extends JpaRepository<Colaborador, Long> {
 
-    // obtem uma lista de Permissoes ORDENADA por nome
-    List<Colaborador> findByOrderByNomePessoalAsc();
-
-    // obtem uma lista de Colaboradores com PAGINACAO
-    @Query(value = "select * from Colaborador order by nomePessoal ASC", nativeQuery = true )
-    Page<Colaborador> findAllColaboradores(Pageable page);
-
     // 🔍 Busca um colaborador específico trazendo NivelAcesso e Servidores
     @Query("""
            SELECT c FROM Colaborador c
@@ -50,6 +43,10 @@ public interface ColaboradoresRepository extends JpaRepository<Colaborador, Long
            LEFT JOIN FETCH c.servidores
            """)
     List<Colaborador> findAllComRelacionamentos();    
+
+    // obtem uma lista de Colaboradores com PAGINACAO
+    @Query(value = "select * from Colaborador order by nomePessoal ASC", nativeQuery = true )
+    Page<Colaborador> findAllColaboradores(Pageable page);
     
     // obtem uma Permissao atraves do nome pessoal
     Optional<Colaborador> findByNomePessoal(String chavePesquisa);
@@ -59,6 +56,9 @@ public interface ColaboradoresRepository extends JpaRepository<Colaborador, Long
 
     // obtem uma Permissao atraves do ID
     Optional<Colaborador> findByEntidadeID(Long chavePesquisa);
+
+    // obtem uma lista de Permissoes ORDENADA por nome
+    List<Colaborador> findByOrderByNomePessoalAsc();
 
     // obtem o numero de Permissoes por ID
     int countByEntidadeID(Long entidadeID);
