@@ -18,27 +18,30 @@
             <!--  MENU DO SISTEMA  -->
 
             <!--  AREA DO CONTEUDO DINAMICO  -->
-            <section class="d-flex align-items-center justify-content-center vh-100 text-center">
-                <div class="w-60">
-                    <div class="mb-5  cachaCard">
-                        <span th:if="${errorType == 'SUCESSO'}">
-                              <i class="fa-solid fa-check fa-beat fa-xl" style="color: #1a5fb4;"></i>
-                        </span>
-                        <span th:if="${errorType == 'NOTFOUND'}">
-                              <i class="fa-solid fa-triangle-exclamation fa-beat fa-xl" style="color: #1a5fb4;"></i>
-                        </span>
-                        <h2><span th:text="${errorPage1}"></span></h2>
-                        <h5><span th:text="${errorPage2}"></span></h5>
-                    </div>
-                    <!-- Mostra este link se errorOrigem == "Dashboard" -->
-                    <a class="btn btn-primary btn-xl" th:if="${errorOrigem == 'Dashboard'}" th:href="@{/dashboard}"><span th:text="#{pre.footer.go-home-btn}"/></a>
+            <section class="d-flex justify-content-center align-items-center vh-100">
+                <div class="col inner-box">
+                    <div class="row cachaCard">  	
+                        <div class="col text-center d-flex flex-column align-items-center gap-4">
+                            <span th:if="${errorType == 'SUCESSO'}"  class="mb-4 d-block">
+                                  <i class="fa-solid fa-check fa-beat fa-xl" style="color: #1a5fb4; font-size: 4em;"></i>
+                            </span>
+                            <span th:if="${errorType == 'NOTFOUND'}" class="mb-4 d-block">
+                                  <i class="fa-solid fa-triangle-exclamation fa-beat fa-xl" style="color: #1a5fb4; font-size: 4em;"></i>
+                            </span>
+                            <h2><span th:text="${errorPage1}"></span></h2>
+                            <h5  class="mb-4"><span th:text="${errorPage2}"></span></h5>
 
-                    <!-- Mostra este link se errorOrigem == 'publico' -->
-                    <a class="btn btn-primary btn-xl" th:if="${errorOrigem == 'Public'}" th:href="@{/}"><span th:text="#{pre.footer.go-home-btn}"/></a>
+                            <!-- Mostra este link se errorOrigem == "Dashboard" -->
+                            <a class="btn btn-primary btn-xl align-self-center" style="width: 50%;" th:if="${errorOrigem == 'Dashboard'}" th:href="@{/dashboard}"><span th:text="#{pre.footer.go-home-btn}"/></a>
+
+                            <!-- Mostra este link se errorOrigem == 'publico' -->
+                            <a class="btn btn-primary btn-xl" th:if="${errorOrigem == 'Public'}" th:href="@{/}"><span th:text="#{pre.footer.go-home-btn}"/></a>
+                        </div>
+                    </div>
                 </div>
             </section>
             <!--  FIM DO CONTEUDO DINAMICO  -->
-            
+
             <!-- ROODAPE DA PAGINA -->
             <div th:insert="~{modulos/fragmento-footer-blank :: footer-limpo}"></div>
         </div>

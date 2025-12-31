@@ -9,38 +9,40 @@
 [Hibernate_BADGE]:    https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white
 [ApacheTomcat_BADGE]: https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=for-the-badge&logo=apache-tomcat&logoColor=black
 
+<style>
+table {
+  width: 80%; /* Largura da tabela */
+  margin: 0 auto; /* Centraliza a tabela */
+}
+</style>
 
 <h1 align="center" style="font-weight: bold;">Projeto CachaBOT</h1>
-
-![spring][SPRING_BADGE]
-![java][JAVA_BADGE]
-![chatgpt][CHATGPT_BADGE]
-![mysql][MYSQL_BADGE]
-![bootstrap][Bootstrap_BADGE]
-![thymeleaf][Thymeleaf_BADGE]
-![netbeans][NetBeans_BADGE]
-![linux][Linux_BADGE]
-![hibernate][Hibernate_BADGE]
-![tomcat][ApacheTomcat_BADGE]
-
 <p align="center">
- <a href="#started">Getting Started</a> •
-  <a href="#routes">API Endpoints</a> •
- <a href="#colab">Collaborators</a> •
- <a href="#contribute">Contribute</a>
+    ![java][JAVA_BADGE]
+    ![spring][SPRING_BADGE]
+    ![hibernate][Hibernate_BADGE]
+    ![thymeleaf][Thymeleaf_BADGE]
+    ![bootstrap][Bootstrap_BADGE]
+</p>
+<p align="center">
+    ![netbeans][NetBeans_BADGE]
+    ![linux][Linux_BADGE]
+    ![tomcat][ApacheTomcat_BADGE]
+    ![mysql][MYSQL_BADGE]
+    ![chatgpt][CHATGPT_BADGE]
 </p>
 
 <p align="center">
   <b>Seu auxiliar na organizacao dos usuarios no Discord</b>
 </p>
 
-<h2 id="started">🚀 Objetivo </h2>
+<h2>🚀 Objetivo </h2>
 
 Este projeto é um BOT para o Discord com a finalizade de prover uma funcionalidade de atribuir cargo automáticamente para os usuários que entrarem no Servidor.
 Ele é um complemento ao "On-Boarding" do discord.
 
 
-<h3>Pre-requisitos</h3>
+<h2>Pre-requisitos</h2>
 
 Desenvolvido utilizando-se o ambiente <a href="https://netbeans.apache.org/"><b>Apache NetBeans IDE</b></a>, gerenciando as dependencias com <a href="https://maven.apache.org/">Apache Maven</a>. Este aplicativo foi desenvolvido utilizando-se as seguintes tecnologias:
 
@@ -50,15 +52,15 @@ Desenvolvido utilizando-se o ambiente <a href="https://netbeans.apache.org/"><b>
 - Servidor Tomcat 11
 
 
-<h2 id="routes">📍 API Endpoints</h2>
+<h2>📍 API Endpoints</h2>
 
 Este projeto não tem uma API configurada ou exposta.
 ​
 
 
-<h2 id="colab">🤝 Colaboradores </h2>
+<h2>🤝 Colaboradores </h2>
 
-Este projeto contou com a colaboração dos seguintes profissionais.
+Este projeto contou com a colaboração dos seguintes profissionais:
 
 <table>
   <tr>

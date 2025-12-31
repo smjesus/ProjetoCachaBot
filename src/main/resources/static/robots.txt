@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cachabot.aeroceti.com.br/sitemap.xml

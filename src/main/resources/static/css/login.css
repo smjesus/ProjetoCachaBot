@@ -23,14 +23,29 @@ html, body {
 
 /* ---------- Links ---------- */
 a {
+  display: inline-block;
   font-size: 14px;
   line-height: 1.7;
-  color: #666;
+  color: #000;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 a:hover {
-  color: #365980;
+  color: #000;
+  font-weight: bold;
+  animation: scalePulsar 1.5s infinite;  
+}
+@keyframes scalePulsar {
+  0% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.05);
+    /* Expande a sombra e a torna transparente */
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* ---------- Inputs ---------- */
@@ -63,7 +78,7 @@ input::placeholder, textarea::placeholder {
   width: 680px;
   background: rgba(251, 253, 255, 0.9);
   border-radius: 10px;
-  padding: 60px 110px 33px;
+  padding: 50px 110px 50px;
 }
 
 /* ---------- Form ---------- */
@@ -74,7 +89,7 @@ input::placeholder, textarea::placeholder {
   margin-bottom: 25px;
 }
 .login100-form-title img {
-  max-width: 220px;
+  max-width: 160px;
   height: auto;
 }
 
@@ -91,7 +106,7 @@ input::placeholder, textarea::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc(50% - 10px);
+  width: 45%;
   height: 70px;
   border-radius: 10px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.2);
@@ -173,4 +188,10 @@ input::placeholder, textarea::placeholder {
   right: 18px;
   top: 50%;
   transform: translateY(-50%);
+}
+
+@media (max-width: 576px) {
+    .wrap-login100 {
+        padding: 25px 25px;
+    }
 }
