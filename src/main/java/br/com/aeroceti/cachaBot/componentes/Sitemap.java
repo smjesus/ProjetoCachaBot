@@ -22,5 +22,6 @@ import java.lang.annotation.Target;
 public @interface Sitemap {
     double priority() default 0.5;
     String changefreq() default "monthly";
+    
 }
 /*                    End of Class                                            */
