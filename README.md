@@ -38,7 +38,7 @@ Este projeto é um BOT para o Discord com a finalizade de prover uma funcionalid
 Ele é um complemento ao "On-Boarding" do discord.
 
 
-<h2>Pre-requisitos</h2>
+<h2>✨ Pre-requisitos</h2>
 
 Desenvolvido utilizando-se o ambiente <a href="https://netbeans.apache.org/"><b>Apache NetBeans IDE</b></a>, gerenciando as dependencias com <a href="https://maven.apache.org/">Apache Maven</a>. Este aplicativo foi desenvolvido utilizando-se as seguintes tecnologias:
 
@@ -102,7 +102,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
   </tr>
 </table>
 
-<h2 id="contribute">📫 Contribuições ao Projeto </h2>
+<h2>📫 Contribuições ao Projeto </h2>
 
 Todas as contribuições para melhoria do projeto são bem-vindas! Você pode ajudar, sugerindo melhorias (através de contato conosco ou clonando o projeto e enviando um "Pull Request").
 
