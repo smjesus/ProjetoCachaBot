@@ -4,33 +4,29 @@
 [MYSQL_BADGE]:        https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white
 [Bootstrap_BADGE]:    https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white
 [Thymeleaf_BADGE]:    https://img.shields.io/badge/Thymeleaf-%23005C0F.svg?style=for-the-badge&logo=Thymeleaf&logoColor=white
-[NetBeans_BADGE]:     https://img.shields.io/badge/NetBeansIDE-1B6AC6.svg?style=for-the-badge&logo=apache-netbeans-ide&logoColor=white
+[NetBeans_BADGE]:     https://img.shields.io/badge/Apache%20NetBeans%20IDE-1B6AC6.svg?style=for-the-badge&logo=Apache-NetBeans-IDE&logoColor=white
 [Linux_BADGE]:        https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black
 [Hibernate_BADGE]:    https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white
 [ApacheTomcat_BADGE]: https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=for-the-badge&logo=apache-tomcat&logoColor=black
 
-<style>
-table {
-  width: 80%; /* Largura da tabela */
-  margin: 0 auto; /* Centraliza a tabela */
-}
-</style>
 
 <h1 align="center" style="font-weight: bold;">Projeto CachaBOT</h1>
-<p align="center">
-    ![java][JAVA_BADGE]
-    ![spring][SPRING_BADGE]
-    ![hibernate][Hibernate_BADGE]
-    ![thymeleaf][Thymeleaf_BADGE]
-    ![bootstrap][Bootstrap_BADGE]
-</p>
-<p align="center">
-    ![netbeans][NetBeans_BADGE]
-    ![linux][Linux_BADGE]
-    ![tomcat][ApacheTomcat_BADGE]
-    ![mysql][MYSQL_BADGE]
-    ![chatgpt][CHATGPT_BADGE]
-</p>
+
+<div align="center"> 
+    
+![java][JAVA_BADGE]
+![spring][SPRING_BADGE]
+![hibernate][Hibernate_BADGE]
+![thymeleaf][Thymeleaf_BADGE]
+![bootstrap][Bootstrap_BADGE]
+
+![netbeans][NetBeans_BADGE]
+![linux][Linux_BADGE]
+![tomcat][ApacheTomcat_BADGE]
+![mysql][MYSQL_BADGE]
+![chatgpt][CHATGPT_BADGE]
+
+</div>
 
 <p align="center">
   <b>Seu auxiliar na organizacao dos usuarios no Discord</b>
@@ -57,44 +53,51 @@ Desenvolvido utilizando-se o ambiente <a href="https://netbeans.apache.org/"><b>
 Este projeto não tem uma API configurada ou exposta.
 ​
 
-
 <h2>🤝 Colaboradores </h2>
 
 Este projeto contou com a colaboração dos seguintes profissionais:
 
-<table>
+<table align="center">
   <tr>
     <td align="center">
-      <a href="#">
-        <img src="https://avatars.githubusercontent.com/u/115511715?v=4" width="100px;" alt="Sergio Murilo Picture"/><br>
-        <sub>
-          <b>Sergio Murilo/b><BR>Desenvolvedor Java
-        </sub>
+      <a href="https://github.com/erivaldoesc">
+        <img src="https://avatars.githubusercontent.com/u/37244395?v=4" width="100px;" alt="Erivaldo Santana Picture"/><br>
       </a>
+      <sub>
+        <b>Erivaldo Santana</b><BR>CEO AeroCETI<br>Desenvolvedor
+      </sub>
     </td>
     <td align="center">
-      <a href="#">
-        <img src="https://avatars.githubusercontent.com/u/91098616?v=4" width="100px;" alt="Victor Nunes Picture"/><br>
-        <sub>
-          <b>Victor Nunes</b><BR>Designer UX/UI
-        </sub>
+      <a href="https://github.com/smjesus">
+        <img src="https://avatars.githubusercontent.com/u/115511715?v=4" width="100px;" alt="Sergio Murilo Picture"/><br>
       </a>
+      <sub>
+        <b>Sergio Murilo</b><BR>PM AeroCETI<br>Desenvolvedor Java
+      </sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/victornunes-me">
+        <img src="https://avatars.githubusercontent.com/u/91098616?v=4" width="100px;" alt="Victor Nunes Picture"/><br>
+      </a>
+      <sub>
+        <b>Victor Nunes</b><BR>UX/Product Designer<br>Desenvolvedor
+      </sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/levigarciia">
+        <img src="https://avatars.githubusercontent.com/u/146113108?v=4" width="100px;" alt="Sergio Levi Picture"/><br>
+      </a>
+      <sub>
+        <b>Sergio Levi</b><BR>Designer<br>Desenvolvedor
+      </sub>
     </td>
     <td align="center">
       <a href="#">
         <img src="https://img.freepik.com/psd-gratuitas/adoravel-brinquedo-de-pato-de-borracha-amarelo-para-a-diversao-do-banho_191095-77534.jpg?semt=ais_incoming&w=740&q=80" width="100px;" alt="Allan Castro Picture"/><br>
-        <sub>
-          <b>Allan Castro</b><BR>Designer Gráfico
-        </sub>
       </a>
-    </td>
-    <td align="center">
-      <a href="#">
-        <img src="https://avatars.githubusercontent.com/u/146113108?v=4" width="100px;" alt="Sergio Levi Picture"/><br>
-        <sub>
-          <b>Sergio Levi</b><BR>Desenvolvedor/Designer
-        </sub>
-      </a>
+      <sub>
+        <b>Allan Castro</b><BR>Designer Gráfico
+      </sub>
     </td>
   </tr>
 </table>
@@ -103,7 +106,7 @@ Este projeto contou com a colaboração dos seguintes profissionais:
 
 Todas as contribuições para melhoria do projeto são bem-vindas! Você pode ajudar, sugerindo melhorias (através de contato conosco ou clonando o projeto e enviando um "Pull Request").
 
-Para aqueles que puderem ou desejarem instalar o BOT no seu Servido do Discord toda informação será de grande valor para aperfeiçoarmos, corrigir ou até expandir o BOT.  Entre em contato pelo formulário no site do projeto.
+Para aqueles que puderem ou desejarem instalar o BOT no seu Servido do Discord toda informação será de grande valor para aperfeiçoarmos, corrigir ou até expandir o BOT.  Entre em contato pelo formulário de contato no site do projeto.
 
 Toda documentação do BOT está disponível no site do Aplicativo:  https://cachabot.aeroceti.com.br
 
