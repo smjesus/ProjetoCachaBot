@@ -48,7 +48,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/faleconosco").permitAll()
                         .requestMatchers(HttpMethod.GET, "/documentacao").permitAll()
                         .requestMatchers(HttpMethod.GET, "/usuario/uuid/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/googlea3e4f03a4569e38f", "googlea3e4f03a4569e38f.html").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/googlea3e4f03a4569e38f", "/googlea3e4f03a4569e38f.html").permitAll()
                         .requestMatchers(HttpMethod.GET, "/sitemap.xml", "/robots.txt").permitAll()
                         .requestMatchers(HttpMethod.GET, "/.well-known/pki-validation/**").permitAll()
                         .requestMatchers("/content-scripts/**").permitAll()

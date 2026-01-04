@@ -19,9 +19,9 @@
             <div th:insert="~{modulos/fragmento-menu-sistema :: navbar-menusistema}"></div>
             <!--  AREA DO CONTEUDO DINAMICO  -->
             <section class="d-flex align-items-center">
-                <div class="col" style="margin-top: 4%;">
+                <div class="col" style="margin-top: 75px; padding: 2em;">
                     <!--    Titulo da Secao     -->
-                    <div class="d-flex align-items-center justify-content-between" style="padding-left: 2%;padding-right: 2%;">
+                    <div class="d-flex align-items-center justify-content-between" style="padding-left: 2%;padding-right: 2%; padding-bottom: 1%;">
                         <h1 th:text="#{servidor.list}" class="m-0"></h1>
                         <a class="btn-alink" target="_blank" th:href="@{/servidor/listar/{ordenar}(ordenar=true)}" sec:authorize="hasAuthority('Administrador')"  th:title="#{global.link.print}">
                             <i class="fa-solid fa-print fa-2xl" style="color: #000000;"></i></a>

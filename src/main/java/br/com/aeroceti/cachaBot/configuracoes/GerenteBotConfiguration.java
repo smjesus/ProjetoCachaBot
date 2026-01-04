@@ -6,6 +6,7 @@
  */
 package br.com.aeroceti.cachaBot.configuracoes;
 
+import br.com.aeroceti.cachaBot.comandos.ContextMenuListener;
 import java.util.EnumSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import br.com.aeroceti.cachaBot.servicos.ColaboradoresService;
 import br.com.aeroceti.cachaBot.servicos.I18nService;
 import br.com.aeroceti.cachaBot.servicos.MailSenderService;
 import br.com.aeroceti.cachaBot.componentes.ComandosBarraEventListener;
+import net.dv8tion.jda.api.entities.Guild;
 
 /**
  * Classe de Configuracao do Discord4J.
@@ -84,6 +86,15 @@ public class GerenteBotConfiguration {
             jdaCliente.getPresence().setActivity(Activity.customStatus("Ativo em " + contador + " servidores."));
             logger.info("JDA Inicializado com sucesso ...");            
             logger.info("Configurando o cliente da Aplicacao do Discord ...");
+            
+            // Deleta os comandos globais para limpar o cache do Discord:
+//            jdaCliente.retrieveCommands().queue(commands -> {
+//                commands.forEach(cmd -> {
+//                    logger.info("Removendo comando global: {}", cmd.getName());
+//                    cmd.delete().queue();
+//                });
+//            });
+            
             // ADICIONA os Comandos de BARRA:
             jdaCliente.updateCommands().addCommands(
                 // Adiciona comandos de Ajuda e de Cargos:
@@ -128,12 +139,25 @@ public class GerenteBotConfiguration {
                             .addOption(OptionType.STRING, "url-da-explicacao", "Informe a URL desejada.", true)
                     
             ).queue();
+            
+            // ADICIONA os Comandos de CONTEXTO:
+            jdaCliente.upsertCommand(Commands.message("Compartilhar este Estudo ...")).queue();
 
             // ADICIONA os LISTENERS:
+            jdaCliente.addEventListener(new MemberWinRole  (servidoresDatabse));
+            jdaCliente.addEventListener(new ContextMenuListener());
             jdaCliente.addEventListener(new ComandosBarraEventListener(servidoresDatabse, usersService, mailService, i18svc, baseUrl));
-            jdaCliente.addEventListener(new MemberWinRole  (servidoresDatabse)                                       );
             
             jdaCliente.awaitReady();
+            
+            // Adiciona um comando de contexto no serviddor especificado: (para testes)
+//            Guild servidor = jdaCliente.getGuildById("1175482654389452891");
+//            if (servidor == null ) {
+//                logger.info("Nao obteve o servidor!!!");
+//            } else {
+//                servidor.upsertCommand( Commands.message("Compartilhar ...") ).queue();
+//            }
+
         } catch (InterruptedException e) {
             logger.info("NÃO foi possível iniciar o cliente: " + e.getMessage());
         }

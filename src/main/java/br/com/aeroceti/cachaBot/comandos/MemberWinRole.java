@@ -23,7 +23,7 @@ import net.dv8tion.jda.api.events.guild.GuildBanEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 
 /**
- * EVENTO para mudanca de Cargo no Discord
+ * CLASSE de Tratamento dos EVENTOS de mudanca de Cargo no Discord
  * 
  * @author Sergio Murilo - smurilo at Gmail.com
  * @version 1.0
